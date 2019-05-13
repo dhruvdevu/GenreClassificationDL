@@ -48,10 +48,9 @@ Like with the chroma features, while the timeseries can be up to 935 timesteps l
 ### Visualization
 
 #### Miley Cyrus: Party in the USA
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
+<iframe width="800" height="600" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="no" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
+<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
 #### Beyoncé: Halo
 
@@ -90,7 +89,7 @@ Our CNN model was motivated by the model used by <a href="https://papers.nips.cc
 <img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
 ### LSTM:
-
+There have also been some promising results using 
 
 ## Results
 
