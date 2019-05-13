@@ -75,6 +75,10 @@ INCLUDE NUMBER OF SONGS PER GENRE HERE
 We trained our models to classify songs based on their genre in these 18 classes, using the lyric data and 2 audio features as input.
 ### Popularity
 Humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes).
+
+## Date Preprocessing
+### Under and Oversampling
+
 ## Models TODO talk about regularization
 Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre. 
 
@@ -92,9 +96,9 @@ Our CNN model was motivated by the model used by <a href="https://papers.nips.cc
 <img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
 ### LSTM:
-There have also been some promising results using LSTMS as seen in [this report](http://cs229.stanford.edu/proj2016/report/IrvinChartockHollander-RecurrentNeuralNetworkswithAttentionforGenreClassification-report.pdf) by Stanford students.
+There have also been some promising results using LSTMS as seen in [this report](http://cs229.stanford.edu/proj2016/report/IrvinChartockHollander-RecurrentNeuralNetworkswithAttentionforGenreClassification-report.pdf) by Stanford students. For each audio feature we use a two layer LSTM with hidden state dimension of 10. For each audio feature, we then pass the output of the last cell of the second layer into the concatenation vector. We also concatenate the lyric embeddings to the concatenation vector and then proceed as described in the baseline model. We did not add regularization since we observed that the model did not tend to overfit – something we may attribute to our data preprocessing techniques. 
 
-<img width="900" height="350" src="Pictures/StaticPlots/Music182LSTM.jpg" alt="Conv Net Diagram">
+<img width="900" height="350" src="Pictures/StaticPlots/Music182LSTM.jpg" alt="LSTM Net Diagram">
 
 
 ## Results
