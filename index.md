@@ -68,6 +68,7 @@ The software tools we used for this project were:
 2. Numpy - We used numpy to do the heavy lifting of data processing, encoding, etc.
 3. Scikit-learn
 4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
+Our code can be found <ahref="https://github.com/daniellengyel/music-cs182/">here</a>
 
 ## Conclusions and Key takeaways
 
