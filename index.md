@@ -76,4 +76,6 @@ Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">he
 
 ## Conclusions and Key takeaways
 
+## Future Directions
+
 
