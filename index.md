@@ -57,7 +57,7 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 ## LSTM + Attention
 
 ## Results
-<iframe width="900" height="720" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html">
+<iframe width="900" height="720" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
       
 ## Tools
 The software tools we used for this project were:
