@@ -57,7 +57,8 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 ## LSTM + Attention
 
 ## Results
-<iframe width="800" height="400" seamless="seamless" scrolling="yes" src="FinalPictures/PlotlyPlots/tsne-scatter-genre.html">
+<iframe width="800" height="400" seamless="seamless" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html">
+      
 ## Tools
 The software tools we used for this project were:
 1. Keras - We used Keras to construct, train, and evaluate our neural nets. We found the Functional API particularly useful because it allowed us to create a modular architecture while using readily available layers, so we had to define only one layer of our own construction.
