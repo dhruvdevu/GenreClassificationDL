@@ -115,7 +115,7 @@ There have also been some promising results using LSTMS as seen in [this report]
 
 
 ### t-SNE
-We plot the **CNN** embedding vectors of the songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting furhter direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
+We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting furhter direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/cnn-tsne-scatter-genre.html"></iframe>
 
