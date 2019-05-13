@@ -9,6 +9,26 @@ Consider the following 3 songs:
 <br>
 How do we determine which songs are similar and which are not alike? As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches [NEEDS CITATION]. We aim, however, to extract this information using audio features and lyrics of songs using deep learning. Specifically, we develop a model to classify songs by genre, and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity using cosine distance.
 
+## Dataset
+## Audio Features
+## Lyrics
+## Genre
+## Usage Data
+## Models
+## Baseline: Fully Connected Network
+To compare our models to a baseline, we train a simple fully connected neural network with 4 hidden layers of dimensions TODO. 
+## CNN (Sander)
+## LSTM + Attention
+
+## Results
+## Tools
+The software tools we used for this project were:
+1. Keras - We used Keras to construct, train, and evaluate our neural nets. We found the Functional API particularly useful because it allowed us to create a modular architecture while using readily available layers, so we had to define only one layer of our own construction.
+2. Numpy - We used numpy to do the heavy lifting of data processing, encoding, etc.
+3. Scikit-learn
+4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
+
+
 
 ### Markdown
 
