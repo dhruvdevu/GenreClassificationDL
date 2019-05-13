@@ -59,20 +59,32 @@ We trained our models to classify songs based on their genre in these 18 classes
 ### Popularity
 Humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes).
 ## Models
+Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre. 
+
+For each model we also included an embedding layer which we later visualize. Since we train our model to predict genre, we expect the embedding layer to cluster songs in the same genre.  
+
 ### Baseline: Fully Connected Network
 To compare our models to a baseline, we train a simple fully connected neural network with 3 hidden layers of dimensions 128, 128, and 50 respectively, followed by a softax layer of dimension 18 to predict genre. Here is a model of our Fully Connected Network:
 
 ### CNN: 
-Here is a visualization of our CNN: 
-<img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
-This model was based off the model used by <a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>. For each audio feature input data of dimension (300, 12), we had a 1 dimensional convolution over time steps, followed by max pooling repeated 3 times. We then performed Global temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Our significant change in this layer was to remove the global L2 and global max pool, which we did in order to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the sentence embedding of our bag of words of lyric data. We then passed this output through 3 hidden layers with the same architecture as our baseline model. 
+Our CNN model was motivated by the model used by <a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>. For the audio features, both Chroma and MFCC, with dimension (300, 12), we had a 1 dimensional convolution over time steps followed by max pooling -- repeated 3 times. We then performed global average temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Compared to van den Oord's model, we removed the global L2 and global max pool to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the lyric embeddings. We then passed this concatinated vector through 3 hidden layers with the same architecture as our baseline model. 
 
+<img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
 ### LSTM:
 
+
 ## Results
-<iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
+
 <img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
+
+
+### t-SNE
+We plot the **CNN** embedding vectors of the songs here. We can clearly see a clustering of the songs. 
+
+<iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
+
+
       
 ## Tools
 The software tools we used for this project were:
