@@ -14,7 +14,7 @@ We are using the famous Million Song Dataset (MSD) and its complementary dataset
 
 The dataset identifies a song by either *song_id* or *track_id*. One or the other is consistently used in the complementary datasets, which allows us to correctly preprocess the data. Given one of the id's we can then determine the song name and the artist. 
 
-For our neural net we take Audio features and Lyrics as our input and Genre and Usage data as our output. After all preprocessing is done we had $$32,648$$ song which had all necessary features.
+For our neural net we take Audio features and Lyrics as our input and Genre and Usage data as our output. After all preprocessing is done we had 32,648 song which had all necessary features.
 
 ## Audio Features
 The audio features come with the MSD. Due to copyright issues, the MSD does not provide audio samples of songs but provides derived features such as chroma and MFCC features. We attempted to retrieve audio samples from 7digital which is a complementary dataset. However, 7digital does not hand out API keys anymore and we were unable the get the data. 
@@ -32,9 +32,9 @@ where two adjacent pitches are separated by one [octave](\href{https://en.wikipe
 
 To get the chroma features various techniques can be used. A common one is to use the short term fourier transform: We slide a window over a given song, and the audio signal within the window is transformed into frequencey space. In the frequency space we bin the frequencies into the corresponding chroma's and compute the intensity of the chroma accordingly (can be done in various ways). By moving the window over the song we then retrieve a timeseries dataset of chroma features. 
 
-The MSD dataset provides timeseries data of chroma features for up to $$935$$ timesteps in a given song. The intensity of the chroma features is normalized, such that the maximum chroma feature has intensity 1.
+The MSD dataset provides timeseries data of chroma features for up to 935 timesteps in a given song. The intensity of the chroma features is normalized, such that the maximum chroma feature has intensity 1.
 
-We noted that not every song has $$935$$ timesteps and the majority of the songs had timesteps within the $$300-400$$ range. Hence, we truncated the data to have $$300$$ timesteps and discarded data with less than $$300$$ timesteps. 
+We noted that not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps. 
 
 ### Timbre Segments
 For a subset of the songs, the MSD provides timbre information. For a given song, they provide timeseries data with twelve dimensional feature vectors encoding information about timbre during the given segments of a song. 
@@ -43,7 +43,7 @@ Timbre is an important feature for music information retrieval and genre classif
 
 The timbre features are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. To understand the data better we plotted timbre feature for various songs:
 
-Like with the chroma features, while the timeseries can be up to $$935$$ timesteps long, most songs will have only $$300-400$$ timesteps available. Hence, we truncate after the first $$300$$ steps and only consider songs with more than $$300$$ steps.
+Like with the chroma features, while the timeseries can be up to 935 timesteps long, most songs will have only 300-400 timesteps available. Hence, we truncate after the first 300 steps and only consider songs with more than 300 steps.
 
 ### Visualization
 
