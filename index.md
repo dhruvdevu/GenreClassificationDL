@@ -1,7 +1,7 @@
 # Understanding Music by extracting song embeddings and classifying genre using Deep Learning
 ## Introduction
 Consider the following 3 songs:
-<<iframe src="https://open.spotify.com/embed/track/6or1bKJiZ06IlK0vFvY75k" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<iframe src="https://open.spotify.com/embed/track/6or1bKJiZ06IlK0vFvY75k" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 <iframe src="https://open.spotify.com/embed/track/6fxVffaTuwjgEk5h9QyRjy" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 <iframe src="https://open.spotify.com/embed/track/4fzsfWzRhPawzqhX8Qt9F3" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
