@@ -48,20 +48,20 @@ Like with the chroma features, while the timeseries can be up to 935 timesteps l
 ### Visualization
 
 #### Miley Cyrus: Party in the USA
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
 #### Beyoncé: Halo
 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Halo_Beyoncé.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Halo_Beyoncé.html"></iframe>
 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
 
 #### Eagles: Hotel California 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Hotel California_Eagles.html"></iframe>
+<iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Hotel California_Eagles.html"></iframe>
 
 
 
@@ -89,7 +89,7 @@ Our CNN model was motivated by the model used by <a href="https://papers.nips.cc
 <img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
 ### LSTM:
-
+There have also been some promising results using LSTMS as seen in [this report](http://cs229.stanford.edu/proj2016/report/IrvinChartockHollander-RecurrentNeuralNetworkswithAttentionforGenreClassification-report.pdf) by Stanford students.
 
 ## Results
 
