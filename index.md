@@ -1,4 +1,4 @@
-# Understanding Music by extracting song embeddings and classifying genre using Deep Learning
+# Understanding Music using Deep Learning
 ## Introduction
 Consider the following 3 songs:
 <iframe src="https://open.spotify.com/embed/track/6or1bKJiZ06IlK0vFvY75k" width="240" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
