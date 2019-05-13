@@ -50,9 +50,14 @@ The timbre features are usually computed by retrieving the <a href="https://epri
 
 Like with the chroma features, while the timeseries can be up to $935$ timesteps long, most songs will have only 300-400 timesteps available. Hence, we truncate after the first 300 steps and only consider songs with more than 300 steps.
 ## Lyrics
-## Genre
-## Popularity
-## Usage Data
+## Task at hand
+### Usage Data
+### Genre
+Due to the difficulties in working with usage data and the problems faced with collaborative filtering, we instead decided to focus directly on a task that would allow our model to focus on actual musical features, i.e., attempt to learn a label or representation of a song that would encourage our model to focus on musical features. The most natural candidate label for such a task is song genre - genre is very often a proxy for features like chord progressions, rhythm, timbre, and many more. Since our dataset was very large, we decided to focus on the 100,000 most popular songs, which fell into 18 different genres:
+INCLUDE NUMBER OF SONGS PER GENRE HERE
+We trained our models to classify songs based on their genre in these 18 classes, using the lyric data and 2 audio features as input.
+### Popularity
+Humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes).
 ## Models
 ### Baseline: Fully Connected Network
 To compare our models to a baseline, we train a simple fully connected neural network with 3 hidden layers of dimensions 128, 128, and 50 respectively, followed by a softax layer of dimension 18 to predict genre. Here is a model of our Fully Connected Network:
