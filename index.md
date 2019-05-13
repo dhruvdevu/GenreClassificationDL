@@ -5,7 +5,9 @@ Consider the following 3 songs:
 <iframe src="https://open.spotify.com/embed/track/6fxVffaTuwjgEk5h9QyRjy" width="240" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 <iframe src="https://open.spotify.com/embed/track/4fzsfWzRhPawzqhX8Qt9F3" width="240" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-How do we determine which songs are similar and which are not alike? Intuitively, we know that Kanye's music is similar to Eminem's in way's that Ed Sheeran's is not. As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches [NEEDS CITATION]. We aim, however, to extract this information using audio features and lyrics of songs using deep learning. Specifically, we develop a model to classify songs by genre, and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity using cosine distance.
+How do we determine which songs are similar and which are not alike? Intuitively, we know that Kanye's music is similar to Eminem's in way's that Ed Sheeran's is not. As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. 
+
+Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches [NEEDS CITATION]. We aim, however, to extract this information using audio features and lyrics of songs using deep learning. Specifically, we develop a model to classify songs by genre, and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity using cosine distance.
 
 ## Dataset
 We are using the famous Million Song Dataset (MSD) and its complementary datasets for the project. The MSD itself provides a freely-accessible collection of audio features and metadata for a million contemporary popular music tracks. The feature analysis and metadata for the million songs are primarily provided by The Echo Nest. While the MSD does not provided audio samples it does provide derived audio features which we use. Furthermore, it provides various complementary datasets from which we retrieve lyrics, genre tags and usage data.
@@ -44,9 +46,9 @@ For a subset of the songs, the MSD provides timbre information. For a given song
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features are usually computed by retrieving the \href{Mel-freqeuncy Cepstral Coefficients } {https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf} \href{(MFCC)}{http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf} and by taking the twelve most representative components. To understand the data better we plotted timbre feature for various songs:
+The timbre features are usually computed by retrieving the <ahref="https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf">Mel-frequency Cepstral Coefficients</a> and by taking the twelve most representative components. To understand the data better we plotted timbre feature for various songs:
 
-Like with the chroma features, while the timeseries can be up to $935$ timesteps long, most songs will have only $300-400$ timesteps available. Hence, we truncate after the first $300$ steps and only consider songs with more than $300$ steps.
+Like with the chroma features, while the timeseries can be up to $935$ timesteps long, most songs will have only 300-400 timesteps available. Hence, we truncate after the first 300 steps and only consider songs with more than 300 steps.
 ## Lyrics
 ## Genre
 ## Usage Data
@@ -66,36 +68,6 @@ The software tools we used for this project were:
 3. Scikit-learn
 4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
 
+## Conclusions and Key takeaways
 
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/ddhruv97/GenreClassificationBlog/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
