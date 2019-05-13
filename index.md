@@ -64,7 +64,7 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 
 ### CNN: 
 Here is a visualization of our CNN: 
-<img width="1200" height="400" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
+<img width="1500" height="450" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 This model was based off the model used by <a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>. For each audio feature input data of dimension (300, 12), we had a 1 dimensional convolution over time steps, followed by max pooling repeated 3 times. We then performed Global temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Our significant change in this layer was to remove the global L2 and global max pool, which we did in order to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the sentence embedding of our bag of words of lyric data. We then passed this output through 3 hidden layers with the same architecture as our baseline model. 
 
 
