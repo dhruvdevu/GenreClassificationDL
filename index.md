@@ -48,7 +48,10 @@ Like with the chroma features, while the timeseries can be up to 935 timesteps l
 ### Visualization
 
 #### Miley Cyrus: Party in the USA
+<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
+<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
+<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="no" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
 #### Beyoncé: Halo
 
@@ -57,7 +60,7 @@ Like with the chroma features, while the timeseries can be up to 935 timesteps l
 <iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
 
 #### Eagles: Hotel California 
-<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.htm"></iframe>
+<iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
 
 <iframe width="450" height="200" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Hotel California_Eagles.html"></iframe>
 
