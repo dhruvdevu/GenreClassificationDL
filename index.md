@@ -19,31 +19,38 @@ For our neural net we take Audio features and Lyrics as our input and Genre and 
 ## Audio Features
 The audio features come with the MSD. Due to copyright issues, the MSD does not provide audio samples of songs but provides derived features such as chroma and MFCC features. We attempted to retrieve audio samples from 7digital which is a complementary dataset. However, 7digital does not hand out API keys anymore and we were unable the get the data. 
 
+
+The derived audio features are provided as timeseries data of up to 935 timesteps in a given song. We note a few things:
+
+    * Not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps.
+
+    * There is generally no gurantee that the timesteps have the same timelength within a song or between songs. While we  observed that the maximum time of a timesteps is 5 seconds, 99.4% of all timelengths are less than or equal to one second. A timelength of 1 second is roughly small enough such that we can treat the samples as the same -- which we did moving forward. 
+   
+    * All audio features timeseries start at the begining of their respective songs. 
+
+
 ### Chroma Features
-Chroma features give a way to represent the intensity of the twelve different pitch classes throughout a song. Generally, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of octave steps. Hence, we can split a pitch into two component: tone height and chroma. The set of the twelve chroma values, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
+Chroma features give a way to represent the intensity of the twelve different pitch classes throughout a song. Generally, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of [octave](\href{https://en.wikipedia.org/wiki/Octave) steps. Hence, we can split a pitch into two component: tone height and chroma. The set of twelve chroma, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
 
     C, C#, D, D#, E, F, F#, G, G#, A, A#, B
 
-Two pitches are said to be in the same pitch class if they are separated by an integral number of octavs. We can write for the chroma F:
+Motivated by how humans preceive pitch, two pitches are said to be in the same pitch class if they are separated by an integral number of octavs. We can write for the chroma F:
 
     ..., F_{-2}, F_{-1}, F_{0}, F_{1}, F_{2}, ...
 
-where two adjacent pitches are separated by one [octave](\href{https://en.wikipedia.org/wiki/Octave).
+where two adjacent pitches are separated by one octave.
 
-To get the chroma features various techniques can be used. A common one is to use the short term fourier transform: We slide a window over a given song, and the audio signal within the window is transformed into frequencey space. In the frequency space we bin the frequencies into the corresponding chroma's and compute the intensity of the chroma accordingly (can be done in various ways). By moving the window over the song we then retrieve a timeseries dataset of chroma features. 
+To get the chroma features various techniques can be used. A common one is to use the short term fourier transform: We slide a window over a given song, and the audio signal within the window is transformed into frequencey space. In the frequency space we bin the frequencies into the corresponding chroma's and compute the intensity of the chroma accordingly (can be done in different ways, e.g. average). By moving the window over the song we then retrieve a timeseries dataset of chroma features. 
 
-The MSD dataset provides timeseries data of chroma features for up to 935 timesteps in a given song. The intensity of the chroma features is normalized, such that the maximum chroma feature has intensity 1.
-
-We noted that not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps. 
+We note that the intensity of the chroma features is normalized, such that the maximum chroma feature has intensity 1.
 
 ### Timbre Segments
 For a subset of the songs, the MSD provides timbre information. For a given song, they provide timeseries data with twelve dimensional feature vectors encoding information about timbre during the given segments of a song. 
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. To understand the data better we plotted timbre feature for various songs:
+The timbre features are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. The max value of a timber value generally depends on the song and is not normalized.
 
-Like with the chroma features, while the timeseries can be up to 935 timesteps long, most songs will have only 300-400 timesteps available. Hence, we truncate after the first 300 steps and only consider songs with more than 300 steps.
 
 ### Visualization
 
