@@ -56,7 +56,7 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 ## CNN (Sander)
 ## LSTM + Attention
 
-## Results
+## Results yey
 <iframe width="1024" height="720" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html">
       
 ## Tools
