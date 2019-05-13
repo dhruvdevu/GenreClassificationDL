@@ -95,7 +95,7 @@ For each model we also included an embedding layer which we later visualize. Sin
 ### Baseline: Fully Connected Network
 To compare our models to a baseline, we train a simple fully connected neural network with 3 hidden layers of dimensions 128, 128, and 50 respectively, followed by a softax layer of dimension 18 to predict genre. Here is a model of our Fully Connected Network:
 
-<img width="900" height="270" src="Pictures/StaticPlots/Music182Baseline.jpg" alt="Baseline Diagram">
+<img width="700" height="350" src="Pictures/StaticPlots/Music182Baseline.jpg" alt="Baseline Diagram">
 
 
 ### CNN: 
