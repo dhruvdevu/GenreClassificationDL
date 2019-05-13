@@ -1,6 +1,12 @@
+# Understanding Music by extracting song embeddings and classifying genre using Deep Learning
 ## Introduction
+Consider the following 3 songs:
+<iframe src="https://open.spotify.com/embed/track/6or1bKJiZ06IlK0vFvY75k" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<iframe src="https://open.spotify.com/track/6fxVffaTuwjgEk5h9QyRjy" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<iframe src="https://open.spotify.com/track/4fzsfWzRhPawzqhX8Qt9F3" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+How do we determine which songs are similar and which are not alike? As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. This is a complicated process
 Computer systems that can process and understand music hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches [NEEDS CITATION]. We aim, however, to extract this information using audio features and lyrics of songs using deeo learning. Specifically, we develop a model to classify songs by genre, and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity using cosine distance.
-[Spotify height="390" uri="spotify:user:music_glue:track:6or1bKJiZ06IlK0vFvY75k"]
+
 
 ### Markdown
 
