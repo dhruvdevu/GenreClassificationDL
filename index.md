@@ -61,6 +61,7 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 
 ## Results
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/tsne-scatter-genre.html"></iframe>
+<img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
       
 ## Tools
 The software tools we used for this project were:
