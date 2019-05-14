@@ -62,7 +62,15 @@ Now, specifically the chroma feature values allow us to interpret the songs well
 
 We notice that Party in the USA has many changes in the intensity of chroma values while Hotel California does not. Such a pattern indicates that Party in the USA has a more energetic start while Hotel California starts slower (notably with the famous slow guitar solo). 
 
+We also provide song snippets for ease of use. Unfortunately, Spotify does not allow to choose the time interval of the song. So, the songs do not overlap with the interval of the features but should serve as a reminder for the general feel of the song. 
+
 #### Miley Cyrus: Party in the USA
+
+<iframe src="https://open.spotify.com/embed/track/5Q0Nhxo0l2bP3pNjpGJwV1" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+There is a clear pattern in how the pitch with the highest intensity evolves. The maximum pitch spike periodically and frequently. Furthermore, the intensity of various pitches change quickly and often, indicating a high energy song. 
+
+Notice also that at every timestep, many pitches are registered simulatniously. We expect the maximum pitch at every timestep to be Miley Cyrus voice, but the other pitches are most likely attributed to the many sound effects in the song. 
 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
@@ -71,13 +79,19 @@ We notice that Party in the USA has many changes in the intensity of chroma valu
 
 #### Beyoncé: Halo
 
+<iframe src="https://open.spotify.com/embed/track/4JehYebiI9JE8sR8MisGVb" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+Halo starts with slower changes in pitches and picks up the pace at the 10 seconds mark. We can notice that the pitch with the highest intensity changes slower than in Party in the USA. Here, we also see a pattern of rising and falling maximum pitch, but it looks much smoother. Agreeing with what we hear in the song. 
+
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Halo_Beyoncé.html"></iframe>
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
 
 #### Eagles: Hotel California 
 
-<iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<iframe src="https://open.spotify.com/embed/track/40riOy7x9W7GXjyGp4pjAv" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+Interestingly, for Hotel California we can observe exactly where the guitar solo ends. Note that before the 50 seconds mark, at every timestep there seems to be mostly only one pitch. This pitch can be attributed to the guitar solo as the guitar will produce a clear sound (playing the pitches on an instrument mod octave will naturally reproduce the solo). After the 50 seconds mark, the song begins and the other instruments begin to play. This is evident by recording several other pitches besides the maximum intensity pitch. 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
 
