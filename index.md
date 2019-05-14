@@ -49,12 +49,22 @@ For a subset of the songs, the MSD provides timbre information. For a given song
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. The max value of a timber value generally depends on the song and is not normalized.
+The timbre features at every timestep are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
+
+
+Due to how the timber segments are calculated, the timber feature vector at every timestep does not have a clear interpretation unlike the chroma features. Also, the maximum value of a component of the timber feature vector at a timestep generally depends on the song and is not normalized.
 
 
 ### Visualization
+We plot the visualization of both the chroma and timber segment timeseries as a heatmap for various songs. While timber features are less interpretable than chroma, we plot them anyway to have a better idea of the data. 
+
+Now, specifically the chroma feature values allow us to interpret the songs well:
+
+We notice that Party in the USA has many changes in the intensity of chroma values while Hotel California does not. Such a pattern indicates that Party in the USA has a more energetic start while Hotel California starts slower (notably with the famous slow guitar solo). 
 
 #### Miley Cyrus: Party in the USA
+
+
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
@@ -66,6 +76,9 @@ The timbre features are usually computed by retrieving the [Mel-freqeuncy Cepstr
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
 
 #### Eagles: Hotel California 
+
+<iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Hotel California_Eagles.html"></iframe>
