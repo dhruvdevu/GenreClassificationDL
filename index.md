@@ -152,8 +152,9 @@ There have also been some promising results using LSTMS as seen in [this report]
 ## Results
 ### Genre Classification
 Here we present our results at our first task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
-<img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
-For the task of genre classification, our best results were from our CNN Model
+
+For the task of genre classification, our best results were from our CNN Model, using a batch size of 10, 30 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The test and training accuracy is presented below:
+<img width="1200" height="800" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
 ### Popularity percentile classification
 
 ### t-SNE
