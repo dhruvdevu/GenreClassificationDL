@@ -56,7 +56,7 @@ For a subset of the songs, the MSD provides timbre information. For a given song
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features at every timestep are usually computed by retrieving the Mel-freqeuncy Cepstral Coefficients (MFCC) [CITE soton.ac.uk] and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
+The timbre features at every timestep are usually computed by retrieving the Mel-freqeuncy Cepstral Coefficients (MFCC) [1] and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
 
 Due to how the timber segments are calculated, the timber feature vector at every timestep does not have a clear interpretation unlike the chroma features. Also, the maximum value of a component of the timber feature vector at a timestep generally depends on the song and is not normalized.
 
@@ -135,7 +135,7 @@ Once we had a cleaned dataset, we started to explore and notice that our genres 
 ### Under and Oversampling
 During data preprocessing and cleaning we noticed that the number of samples for each genre label were unbalanced. Since around 45% of our dataset is 'rock' labeled our model will easily achieve artificial high accuracy of 45% by always predicting 'rock'. Only when plotting the confusion matrix will it become obvious that our model is not performing as desired. 
 
-To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [CITE Jair sampling paper]. Before using the technique, we removed two of the genres which had less than 10 samples in the dataset: Vocal and International. 
+To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [2]. Before using the technique, we removed two of the genres which had less than 10 samples in the dataset: Vocal and International. 
 
 To balance the classes, we decided to sample 4,000 times with replacement for the rock dataset and sample 1,000 times with replacement from each other genre subset. We decided to retain more rock samples because we believe that the reason many samples are labeled as rock is because most music sounds vaguely similar to rock. Hence, when allowing the model to train very well on rock, we believe that the model will better learn to classify other genres by only having to notice minor differences in the features. This reasoning follows the motivation for transfer learning, where training on one task makes it easier to train for a related task. 
 
@@ -257,21 +257,24 @@ Wayne (24%): Processed and generated lyric embeddings from BoW representation, w
 
 ## References
 
-Xiwang Yang, Yang Guo, Yong Liu, Harald Steck. A survey of collaborative filtering based social recommender systems. Computer Communications Volume 41, 15 March 2014, Pages 1-10. 2013.
 
-Franz de Leon, Kirk Martinez. ENHANCING TIMBRE MODEL USING MFCC AND ITS TIME DERIVATIVES FOR MUSIC SIMILARITY ESTIMATION. 20th European Signal Processing Conference (EUSIPCO). 2012
+[1] Y. MG Costa, L. S. Oliveira, and C. N. Silla. An evaluation of convolutional neural networks for music classification using spectrograms. Applied Soft Computing, 52:28–38, 2017.
 
-Alexandros Tsaptsinos. LYRICS-BASED MUSIC GENRE CLASSIFICATION USING A HIERARCHICAL ATTENTION NETWORK, 18th International Society for Music Information Retrieval Conference, Suzhou, China. 2017.
+[2] A. Fern, S. Garc, F. Herrera, N. V. Chawla. SMOTE for Learning from Imbalanced Data: Progress and Challenges. Journal of Artificial Intelligence Research 61 863-905. 2018.
 
-Alberto Fern, Salvador Garc, Francisco Herrera, Nitesh V. Chawla. SMOTE for Learning from Imbalanced Data: Progress and Challenges. Journal of Artificial Intelligence Research 61 863-905. 2018.
+[3] J. Ferrero, F. Agnès, L. Besacier, D. Schwab. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
 
-Aaron van den Oord, Sander Dieleman, Benjamin Schrauwen. Deep content-based music recommendation. Advances in Neural Information Processing Systems 26 (NIPS). 2013.
+[4] T. Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
 
-Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
+[5] F. de Leon, K. Martinez. ENHANCING TIMBRE MODEL USING MFCC AND ITS TIME DERIVATIVES FOR MUSIC SIMILARITY ESTIMATION. 20th European Signal Processing Conference (EUSIPCO). 2012
 
-Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
+[6] A. van den Oord, Sander Dieleman, Benjamin Schrauwen. Deep content-based music recommendation. Advances in Neural Information Processing Systems 26 (NIPS). 2013.
 
-Y. MG Costa, L. S. Oliveira, and C. N. Silla. An evaluation of convolutional neural networks for music classification using spectrograms. Applied Soft Computing, 52:28–38, 2017.
+[7] A. Tsaptsinos. LYRICS-BASED MUSIC GENRE CLASSIFICATION USING A HIERARCHICAL ATTENTION NETWORK, 18th International Society for Music Information Retrieval Conference, Suzhou, China. 2017.
+
+[8] X. Yang, Y. Guo, Y. Liu, H. Steck. A survey of collaborative filtering based social recommender systems. Computer Communications Volume 41, 15 March 2014, Pages 1-10. 2013.
+
+
 
 
 
