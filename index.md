@@ -153,6 +153,7 @@ There have also been some promising results using LSTMS as seen in [this report]
 ### Genre Classification
 Here we present our results at our first task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
 <img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
+For the task of genre classification, our best results were from our CNN Model
 ### Popularity percentile classification
 
 ### t-SNE
