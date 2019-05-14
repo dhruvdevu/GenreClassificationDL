@@ -249,28 +249,31 @@ To make use of the work we put forward on the usage data, we also wanted to pred
 
 ## Team Contributions:
 
-Dhruv: Acquired full MSD, Data preprocessing (genre data, usage data, audio feature data), built CNN, LSTM and baseline model, trained models, generated embeddings, set up and wrote content for website, calculated metrics and plots for model evaluation.
+Dhruv (38%): Acquired full MSD, Data preprocessing (genre data, usage data, audio feature data), built CNN, LSTM and baseline model, trained models, generated embeddings, set up and wrote content for website, calculated metrics and plots for model evaluation.
 
-Daniel: Set up codebase, Data preprocessing (genre data, usage data, audio feature data), built LSTM model, wrote content for website, t-SNE plotting, audio exploration and visualization, Model visualization diagrams.
+Daniel (38%): Set up codebase, Data preprocessing (genre data, usage data, audio feature data), built LSTM model, wrote content for website, t-SNE plotting, audio exploration and visualization, Model visualization diagrams.
 
-Wayne: Processed and generated lyric embeddings from BoW representation, wrote Lyric section for website, Audio preprocessing.
+Wayne (24%): Processed and generated lyric embeddings from BoW representation, wrote Lyric section for website, Audio preprocessing.
 
 ## References
 
-(https://www.sciencedirect.com/science/article/pii/S0140366413001722) - CF
+Xiwang Yang, Yang Guo, Yong Liu, Harald Steck. A survey of collaborative filtering based social recommender systems. Computer Communications Volume 41, 15 March 2014, Pages 1-10. 2013.
+
+Franz de Leon, Kirk Martinez. ENHANCING TIMBRE MODEL USING MFCC AND ITS TIME DERIVATIVES FOR MUSIC SIMILARITY ESTIMATION. 20th European Signal Processing Conference (EUSIPCO). 2012
+
+Alexandros Tsaptsinos. LYRICS-BASED MUSIC GENRE CLASSIFICATION USING A HIERARCHICAL ATTENTION NETWORK, 18th International Society for Music Information Retrieval Conference, Suzhou, China. 2017.
+
+Alberto Fern, Salvador Garc, Francisco Herrera, Nitesh V. Chawla. SMOTE for Learning from Imbalanced Data: Progress and Challenges. Journal of Artificial Intelligence Research 61 863-905. 2018.
+
+Aaron van den Oord, Sander Dieleman, Benjamin Schrauwen. Deep content-based music recommendation. Advances in Neural Information Processing Systems 26 (NIPS). 2013.
 
 Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
+
 Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
 
-(https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf)
+Y. MG Costa, L. S. Oliveira, and C. N. Silla. An evaluation of convolutional neural networks for music classification using spectrograms. Applied Soft Computing, 52:28–38, 2017.
 
-https://ismir2017.smcnus.org/wp-content/uploads/2017/10/43_Paper.pdf -- hierarchical lstm 
 
-Y. MG Costa, L. S. Oliveira, and C. N. Silla. An evaluation of convolutional neural networks for music classification using spectrograms. Applied Soft Computing,
-52:28–38, 2017.
 
 http://dawenl.github.io/files/FINAL.pdf -- other students did something similar but we get better results and getting embedding spaces. 
 
-(https://www.jair.org/index.php/jair/article/view/11192/26406)
-
-<a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>
