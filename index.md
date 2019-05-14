@@ -7,7 +7,7 @@ Consider the following 3 songs:
 
 How do we determine which songs are similar and which are not? Intuitively, we know that Kanye's music is similar to Eminem's in ways that Ed Sheeran's is not. As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. 
 
-Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches such as collaborative filtering [CITE]. We aim, however, to extract this information using audio features and lyrics of songs directly using deep learning. Specifically, we develop a model to classify songs by genre and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity. We choose genre for learning song embedding, since it is is very often a proxy for features like chord progressions, rhythm, timbre, and other musical features.
+Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches such as collaborative filtering [9]. We aim, however, to extract this information using audio features and lyrics of songs directly using deep learning. Specifically, we develop a model to classify songs by genre and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity. We choose genre for learning song embedding, since it is is very often a proxy for features like chord progressions, rhythm, timbre, and other musical features.
 
 ## Problem statement and Success Metric
 We aim to predict genre labels and create latent embedding representations of songs given audio features and lyrics. To do so we develop three different deep learning models: 1) Baseline Dense Network, 2) Convolutional Neural Network 3) LSTM. Each network will output an array which contains a logit for each genre and has a layer which contains a 50 dimensional latent embedding representation of the song. 
@@ -56,7 +56,7 @@ For a subset of the songs, the MSD provides timbre information. For a given song
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features at every timestep are usually computed by retrieving the Mel-freqeuncy Cepstral Coefficients (MFCC) [1] and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
+The timbre features at every timestep are usually computed by retrieving the Mel-freqeuncy Cepstral Coefficients (MFCC) [6] and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
 
 Due to how the timber segments are calculated, the timber feature vector at every timestep does not have a clear interpretation unlike the chroma features. Also, the maximum value of a component of the timber feature vector at a timestep generally depends on the song and is not normalized.
 
@@ -109,7 +109,7 @@ Lyrics provide important features for the uniqueness and relative similarities o
 To be more specific, since many words are common to all songs, we implement term frequency–inverse document frequency (TF-IDF) as weights for all words. This identifies the importance of each word in a lyric that reveal the style and type of a song. Then, using the embedding vector for each word in a lyrics, we get a embedding vector for each song using a weighted sum. The advantage of using TF-IDF is its simplicity and efficiency. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. Sometimes, the high frequency words are semantically important. Our bag of words representation also prevents us from taking advantage of word ordering in sentences (which we could have done using methods like attention). This however, is unavoidable due to copyrights on lyric data, which allow us only to obtain bag of word representations. This may be mitigated in our situation by the fact that lyrics are often very repetetive, so a bag of words representation may not be so bad after all.
 
 
-It is proved that [Tom 2016] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [Jeremy 2017] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
+It is proved that [4] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [3] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
 
 
 ### Genre
@@ -153,12 +153,12 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 
 
 ### CNN: 
-Our CNN model was motivated by the model used by [Sander paper]. For the audio features, both Chroma and MFCC, with dimension (300, 12), we had a 1 dimensional convolution over time steps followed by max pooling -- repeated 3 times. We then performed global average temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Compared to van den Oord's model, we removed the global L2 and global max pool to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the lyric embeddings. We then passed this concatinated vector through 3 hidden layers with the same architecture as our baseline model. 
+Our CNN model was motivated by the model used by [7, 1]. For the audio features, both Chroma and MFCC, with dimension (300, 12), we had a 1 dimensional convolution over time steps followed by max pooling -- repeated 3 times. We then performed global average temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Compared to van den Oord's model, we removed the global L2 and global max pool to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the lyric embeddings. We then passed this concatinated vector through 3 hidden layers with the same architecture as our baseline model. 
 
 <img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
 ### LSTM:
-There have also been some promising results using LSTMS as seen in [this report](http://cs229.stanford.edu/proj2016/report/IrvinChartockHollander-RecurrentNeuralNetworkswithAttentionforGenreClassification-report.pdf) by Stanford students. For each audio feature we use a two layer LSTM with hidden state dimension of 10. For each audio feature, we then pass the output of the last cell of the second layer into the concatenation vector. We also concatenate the lyric embeddings to the concatenation vector and then proceed as described in the baseline model. We did not add regularization since we observed that the model did not tend to overfit – something we may attribute to our data preprocessing techniques. 
+The LSTM was motivated by [8] who achieved great results on a different dataset. For each audio feature we use a two layer LSTM with hidden state dimension of 10. For each audio feature, we then pass the output of the last cell of the second layer into the concatenation vector. We also concatenate the lyric embeddings to the concatenation vector and then proceed as described in the baseline model. We did not add regularization since we observed that the model did not tend to overfit – something we may attribute to our data preprocessing techniques. 
 
 <img width="900" height="350" src="Pictures/StaticPlots/Music182LSTM.jpg" alt="LSTM Net Diagram">
 
@@ -191,9 +191,7 @@ Our model had an accuracy of ~30%. This varied between training runs, and we occ
 
 The LSTM model had an average precision of 0.32, which is worse than our baseline. In addition, it had a (not bad) F1 score of 0.48. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. 
 
-Though our model on average performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. This theory has evidence in the form of results from <a href="http://dawenl.github.io/files/FINAL.pdf
-">Liang et al</a>,who were able to obtain 38% accuracy on the MSD using the same audio features and lyric data, but used a larger fraction of the dataset.
-
+Though our model on average performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. This theory has evidence in the form of results from [8] who were able to obtain up to 50% accuracy on a different dataset with 20 genres, trained only on lyric data.
 
 Our best results were from our CNN Model, using a batch size of 10, 20 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The training and validation accuracy is presented below:
 
@@ -241,9 +239,9 @@ It would be interesting to study the effect of including and excluding different
 It would also be interesting to try out more optimizers, although we found reasonable success using SGD and Adam.
 
 ### Other approaches 
-We started the project by attempting to build a model which learns a mapping from audio features and lyrics to a song's representation in the collaborative filtering space [reference collaborative filtering]. A very useful model when attempting to recommend songs with a low number of plays. Our approach was motivated by [Sanders paper] to which we aimed to contribute by including lyric data as feature input. 
+We started the project by attempting to build a model which learns a mapping from audio features and lyrics to a song's representation in the collaborative filtering space [9]. A very useful model when attempting to recommend songs with a low number of plays. Our approach was motivated by [7] to which we aimed to contribute by including lyric data as feature input. 
 
-The usage data from the million song dataset proved to be difficult to work with. We attempted to obtain the collaborative filtering space by using the Spark Alternating Least Squares algorithm with implicit feedback from [https://dl.acm.org/citation.cfm?id=1608614] on a Google Cloud instance. However, even after an exhaustive hyper-parameter search we were unable to produce a collaborative filtering space which was reasonable: Rudolph the red nosed reindeer and a heavy metal song were closest neighbors. Since the authors did not elaborate on the collaborative filtering space they found in their paper, we decided to reached out. They haven't responded yet. Since our results seemed inappropriate and we could not find how a correct collaborative filtering space should look like, we decided to pivot on our problem statement. 
+The usage data from the million song dataset proved to be difficult to work with. We attempted to obtain the collaborative filtering space by using the Spark Alternating Least Squares algorithm with implicit feedback from [5] on a Google Cloud instance. However, even after an exhaustive hyper-parameter search we were unable to produce a collaborative filtering space which was reasonable: Rudolph the red nosed reindeer and a heavy metal song were closest neighbors. Since the authors did not elaborate on the collaborative filtering space they found in their paper, we decided to reached out. They haven't responded yet. Since our results seemed inappropriate and we could not find how a correct collaborative filtering space should look like, we decided to pivot on our problem statement. 
 
 To make use of the work we put forward on the usage data, we also wanted to predict number of plays of a song given audio features and lyrics. We reasoned that humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes). However, we were not able to achieve a better result than random classification and the embedding space which we learned similarly to the genre classification task appeared random as well. Therefore, we decided to solely focus on genre classification. 
 
@@ -266,13 +264,18 @@ Wayne (24%): Processed and generated lyric embeddings from BoW representation, w
 
 [4] T. Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
 
-[5] F. de Leon, K. Martinez. ENHANCING TIMBRE MODEL USING MFCC AND ITS TIME DERIVATIVES FOR MUSIC SIMILARITY ESTIMATION. 20th European Signal Processing Conference (EUSIPCO). 2012
+[5] Y. Koren, R. Bell, C. Volinsky. Matrix Factorization Techniques for Recommender Systems. IEEE Computer Society Press Los Alamitos, CA, USA. 2009.
 
-[6] A. van den Oord, Sander Dieleman, Benjamin Schrauwen. Deep content-based music recommendation. Advances in Neural Information Processing Systems 26 (NIPS). 2013.
+[6] F. de Leon, K. Martinez. ENHANCING TIMBRE MODEL USING MFCC AND ITS TIME DERIVATIVES FOR MUSIC SIMILARITY ESTIMATION. 20th European Signal Processing Conference (EUSIPCO). 2012
 
-[7] A. Tsaptsinos. LYRICS-BASED MUSIC GENRE CLASSIFICATION USING A HIERARCHICAL ATTENTION NETWORK, 18th International Society for Music Information Retrieval Conference, Suzhou, China. 2017.
+[7] A. van den Oord, Sander Dieleman, Benjamin Schrauwen. Deep content-based music recommendation. Advances in Neural Information Processing Systems 26 (NIPS). 2013.
 
-[8] X. Yang, Y. Guo, Y. Liu, H. Steck. A survey of collaborative filtering based social recommender systems. Computer Communications Volume 41, 15 March 2014, Pages 1-10. 2013.
+[8] A. Tsaptsinos. LYRICS-BASED MUSIC GENRE CLASSIFICATION USING A HIERARCHICAL ATTENTION NETWORK, 18th International Society for Music Information Retrieval Conference, Suzhou, China. 2017.
+
+[9] X. Yang, Y. Guo, Y. Liu, H. Steck. A survey of collaborative filtering based social recommender systems. Computer Communications Volume 41, 15 March 2014, Pages 1-10. 2013.
+
+
+
 
 
 
