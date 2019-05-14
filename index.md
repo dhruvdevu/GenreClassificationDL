@@ -152,8 +152,10 @@ We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clust
 The software tools we used for this project were:
 1. Keras - We used Keras to construct, train, and evaluate our neural nets. We found the Functional API particularly useful because it allowed us to create a modular architecture while using readily available layers, so we had to define only one layer of our own construction.
 2. Numpy - We used numpy to do the heavy lifting of data processing, encoding, etc.
-3. Scikit-learn
+3. Scikit-learn - we used scikit learn to calculate confusion matrices, precision-recall curves, f1-scores.
 4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
+Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">here</a>
+To train our models, we used an AWS p2.xlarge instance, with a Tesla K80 GPU. In addition, we made use of the publicly hosted EBS copy of the Million Song Dataset.
 Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">here</a>
 
 ## Conclusions and Key takeaways
