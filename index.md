@@ -216,9 +216,9 @@ This matrix has mixed but reasonable results. We do see an overall diagonal stru
 
 
 ### Latent Embedding Representation: t-SNE
-We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs which we consider a success considering the problem statement. 
+We plot the **CNN** embedding vectors of 3,000 songs with t-SNE. We can clearly see a clustering of the songs which we consider a success considering the problem statement.
 
-Surprisingly, our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting further direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
+Surprisingly, our model also picked up on other interesting song characteristics. While the cluster around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting further direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/cnn-tsne-scatter-genre.html"></iframe>
 
@@ -242,9 +242,11 @@ We were able to obtain 55% accuracy at 16 genre classification using our CNN Mod
 ### Future Directions
 It would be interesting to study the effect of including and excluding different parts of the data - for example, training a model on only lyrics, or only the audio features. This would allow us to determine which parts of our data are most useful, and whether all of them are neccessary. This would be informative, because knowing which parts of our data are more relevant would allow us to build more specific models to take advantage of the data.
 
+It would also be interesting to analyze the embedding space more. How do the songs stand in relation to another, are any more features encoded in the embeddings space? The clustering of Latin songs could be further explored as well –- i.e. looking at which features and which filters of the CNN model create the clustering. 
+
 It would also be interesting to try out more optimizers, although we found reasonable success using SGD and Adam.
 
-### Other approaches 
+### Other work done for this project 
 We started the project by attempting to build a model which learns a mapping from audio features and lyrics to a song's representation in the collaborative filtering space [9]. A very useful model when attempting to recommend songs with a low number of plays. Our approach was motivated by [7] to which we aimed to contribute by including lyric data as feature input. 
 
 The usage data from the million song dataset proved to be difficult to work with. We attempted to obtain the collaborative filtering space by using the Spark Alternating Least Squares algorithm with implicit feedback from [5] on a Google Cloud instance. However, even after an exhaustive hyper-parameter search we were unable to produce a collaborative filtering space which was reasonable: Rudolph the red nosed reindeer and a heavy metal song were closest neighbors. Since the authors did not elaborate on the collaborative filtering space they found in their paper, we decided to reached out. They haven't responded yet. Since our results seemed inappropriate and we could not find how a correct collaborative filtering space should look like, we decided to pivot on our problem statement. 
