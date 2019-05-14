@@ -9,6 +9,9 @@ How do we determine which songs are similar and which are not? Intuitively, we k
 
 Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches such as [collaborative filtering](https://www.sciencedirect.com/science/article/pii/S0140366413001722). We aim, however, to extract this information using audio features and lyrics of songs using deep learning. Specifically, we develop a model to classify songs by genre, identify their popularity, and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity.
 
+
+???? Due to the difficulties in working with usage data and the problems faced with collaborative filtering, we instead decided to focus directly on a task that would allow our model to focus on actual musical features, i.e., attempt to learn a label or representation of a song that would encourage our model to focus on musical features. The most natural candidate label for such a task is song genre - genre is very often a proxy for features like chord progressions, rhythm, timbre, and many more. ????
+
 ## Dataset
 We are using the famous Million Song Dataset (MSD) and its complementary datasets for the project. The MSD itself provides a freely-accessible collection of audio features and metadata for a million contemporary popular music tracks. The feature analysis and metadata for the million songs are primarily provided by The Echo Nest. While the MSD does not provided audio samples it does provide derived audio features which we use. Furthermore, it provides various complementary datasets from which we retrieve lyrics, genre tags and usage data.
 
@@ -68,9 +71,9 @@ We also provide song snippets for ease of use. Unfortunately, Spotify does not a
 
 <iframe src="https://open.spotify.com/embed/track/5Q0Nhxo0l2bP3pNjpGJwV1" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-There is a clear pattern in how the pitch with the highest intensity evolves. The maximum pitch spike periodically and frequently. Furthermore, the intensity of various pitches change quickly and often, indicating a high energy song. 
+There is a clear pattern in how the pitch with the highest intensity evolves. The maximum pitch spikes periodically and frequently. Furthermore, the intensity of various pitches change quickly and often, indicating a high energy song. 
 
-Notice also that at every timestep, many pitches are registered simulatniously. We expect the maximum pitch at every timestep to be Miley Cyrus voice, but the other pitches are most likely attributed to the many sound effects in the song. 
+Notice that at every timestep many pitches are registered simultaneously. While we expect the maximum pitch at every timestep to be Miley Cyrus' voice, the other pitches are most likely attributed to the many sound effects in the song. 
 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Party In The U.S.A._Miley Cyrus.html"></iframe>
@@ -81,7 +84,7 @@ Notice also that at every timestep, many pitches are registered simulatniously. 
 
 <iframe src="https://open.spotify.com/embed/track/4JehYebiI9JE8sR8MisGVb" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-Halo starts with slower changes in pitches and picks up the pace at the 10 seconds mark. We can notice that the pitch with the highest intensity changes slower than in Party in the USA. Here, we also see a pattern of rising and falling maximum pitch, but it looks much smoother. Agreeing with what we hear in the song. 
+Halo starts with slower changes in pitches and picks up the pace at the 10 seconds mark. We notice that the pitch with the highest intensity changes slower than in Party in the USA and also see a smoother pattern of rising and falling maximum pitch. In contrast to Party in the USA, we expect Halo to be a slower paced song -- agreeing with what we hear. 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Halo_Beyoncé.html"></iframe>
 
@@ -91,7 +94,7 @@ Halo starts with slower changes in pitches and picks up the pace at the 10 secon
 
 <iframe src="https://open.spotify.com/embed/track/40riOy7x9W7GXjyGp4pjAv" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-Interestingly, for Hotel California we can observe exactly where the guitar solo ends. Note that before the 50 seconds mark, at every timestep there seems to be mostly only one pitch. This pitch can be attributed to the guitar solo as the guitar will produce a clear sound (playing the pitches on an instrument mod octave will naturally reproduce the solo). After the 50 seconds mark, the song begins and the other instruments begin to play. This is evident by recording several other pitches besides the maximum intensity pitch. 
+For Hotel California we can observe exactly where the guitar solo ends. Note that before the 50 seconds mark, for every timestep there seems to be mostly only one clear pitch. This pitch can be attributed to the guitar solo as fingerpicking the guitar will produce mostly one clear pitch (note, playing the pitches on an instrument mod octave will reproduce the solo). After the 50 seconds mark, the other instruments begin to play. This start is evident by noting several other pitches besides the maximum intensity pitch. 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/chroma_Hotel California_Eagles.html"></iframe>
 
@@ -101,20 +104,20 @@ Interestingly, for Hotel California we can observe exactly where the guitar solo
 
 
 ## Lyrics
-Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequences of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. Here we try to summarize the information of each lyrics into a single embedded vector by first deem the lyrics as a Bag-of-Words model, then with a embedded vector for each single word, we implement a weighted sum to each word to retrieve a general embedded vector representation of the song. 
-
-To be more specific, due to the widely used common words in lyrics, while analyzing the content of the lyrics we give more focus on the rarely appeared words by implementing term frequency–inverse document frequency (TF-IDF) as weights for all words. The implementation of TF-IDF is for identifying the importance of each word in a lyrics that reveal the style and type of a song. Then, with the embedding vector for each word in a lyrics, we get a embedding vector for each song by implementing the weights. The advantage of using TF-IDF is that it's simple and efficient, and produce reasonable results that fit the practical situation. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. Sometimes the important words may appear many time. The algorithm may also not deliver valuable information from the different positions a word appear in a sentence. However, it may not have a strong effect in our situation due to the specialty of lyrics, which involve a lot of repeats and rhymes.
 
 
-It is proved that [Tom et al, 2016] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [Jeremy et al 2017] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
+## Genre
+Since our dataset was very large, we decided to focus on the 100,000 most popular songs, which fell into 18 different genres:
 
-## Task at hand
-### Usage Data
-### Genre
-Due to the difficulties in working with usage data and the problems faced with collaborative filtering, we instead decided to focus directly on a task that would allow our model to focus on actual musical features, i.e., attempt to learn a label or representation of a song that would encourage our model to focus on musical features. The most natural candidate label for such a task is song genre - genre is very often a proxy for features like chord progressions, rhythm, timbre, and many more. Since our dataset was very large, we decided to focus on the 100,000 most popular songs, which fell into 18 different genres:
-INCLUDE NUMBER OF SONGS PER GENRE HERE
-We trained our models to classify songs based on their genre in these 18 classes, using the lyric data and 2 audio features as input.
-### Popularity
+      Vocal, Punk, Rock, Country, Blues, New, World, Reggae, Jazz, Folk, RnB,
+      International, Pop_Rock, Electronic, Metal, Rap, Pop, Latin
+      
+The subset of the 100,000 most popular songs had only 32,648 songs with a genre label. Furthermore, around 45% of the labels fell into the rock category as we can see in the following plot:
+
+<iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/genre_histogram.html"></iframe>
+
+
+## Usage Data/Popularity
 Humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes).
 
 ## Date Preprocessing
@@ -159,19 +162,12 @@ We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clust
 The software tools we used for this project were:
 1. Keras - We used Keras to construct, train, and evaluate our neural nets. We found the Functional API particularly useful because it allowed us to create a modular architecture while using readily available layers, so we had to define only one layer of our own construction.
 2. Numpy - We used numpy to do the heavy lifting of data processing, encoding, etc.
-3. Scikit-learn - we used scikit learn to calculate confusion matrices, precision-recall curves, f1-scores.
+3. Scikit-learn
 4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
-Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">here</a>
-To train our models, we used an AWS p2.xlarge instance, with a Tesla K80 GPU. In addition, we made use of the publicly hosted EBS copy of the Million Song Dataset.
 Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">here</a>
 
 ## Conclusions and Key takeaways
 
 ## Future Directions
-
-## References
-
-Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
-Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
 
 
