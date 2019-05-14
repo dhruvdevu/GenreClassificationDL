@@ -159,19 +159,26 @@ There have also been some promising results using LSTMS as seen in [this report]
 
 ## Results
 ### Genre Classification
-Here we present our results at our main task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
+Here we present our results at our main task - classifying songs by genre. We partition our songs into a train and test set (of sizes 26k, 6k respectively) using sklearn after shuffling to mix up genres. For validation, we use keras' built in partitioning to create a validation set with a split of 0.3.
+
+The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
+
 First, to understand the results from our LSTM and CNN model, we look at how a baseline full connected net performs on our data. This is how our training and validation accuracy look:
+
 <img width="8000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
+
 Not too bad - even this basic model seems to be learning something, which is promising for us. We see test and training accuracy of about 40%. 
 
 Let's look at our model's precision and recall curve - even though we balanced our classes in the data, accuracy is not always the best metric for our model's success.
+
 <img width="800" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
+
 Our baseline has an average precision of 0.44 over 18 classes, with an F1 score of 0.42.
 
 We now look at our LSTM Model. One of the problems we faced with our LSTM was that it was much slower at both training and inference - it took on the order of 20x as long to train and infer. Here we show our results:
 
-
 <img width="800" height="500" src="Pictures/ipyPlots/lstm_accuracy.png" alt="best">
+
 Our model had an accuracy of ~30%. This varied between training runs, and we occasionally were able to get it to the range of 40-45% with a smaller batch size.
 
 <img width="800" height="500" src="Pictures/ipyPlots/lstm_precision_recall.png" alt="best">
@@ -183,10 +190,13 @@ Though our model on average performed worse than our baseline, a large part of t
 
 
 Our best results were from our CNN Model, using a batch size of 10, 20 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The training and validation accuracy is presented below:
+
 <img width="800" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
 
 This is a considerable improvement over the baseline model and the LSTM model, with a validation/test accuracy of 50-55%. Further, we look at the Precision and recall:
+
 <img width="800" height="500" src="Pictures/ipyPlots/genre_precision_recall_better.png" alt="prc">
+
 Our model had an F1 score of 0.52 and an average precision of 0.48, significantly better than the LSTM and the baseline.
 
 We also look at the confusion matrix for our CNN model:
@@ -228,6 +238,14 @@ We started the project by attempting to build a model which learns a mapping fro
 The usage data from the million song dataset proved to be difficult to work with. We attempted to obtain the collaborative filtering space by using the Spark Alternating Least Squares algorithm with implicit feedback from [https://dl.acm.org/citation.cfm?id=1608614] on a Google Cloud instance. However, even after an exhaustive hyper-parameter search we were unable to produce a collaborative filtering space which was reasonable: Rudolph the red nosed reindeer and a heavy metal song were closest neighbors. Since the authors did not elaborate on the collaborative filtering space they found in their paper, we decided to reached out. They haven't responded yet. Since our results seemed inappropriate and we could not find how a correct collaborative filtering space should look like, we decided to pivot on our problem statement. 
 
 To make use of the work we put forward on the usage data, we also wanted to predict number of plays of a song given audio features and lyrics. We reasoned that humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes). However, we were not able to achieve a better result than random classification and the embedding space which we learned similarly to the genre classification task appeared random as well. Therefore, we decided to solely focus on genre classification. 
+
+## Team Contributions:
+
+Dhruv: Acquired full MSD, Data preprocessing (genre data, usage data, audio feature data), built CNN, LSTM and baseline model, trained models, generated embeddings, set up and wrote content for website, calculated metrics and plots for model evaluation.
+
+Daniel: Data preprocessing (genre data, usage data, audio feature data), built LSTM model, wrote content for website, t-SNE plotting, audio exploration and visualization, Model visualization diagrams.
+
+Wayne: Processed and generated lyric embeddings from BoW representation, wrote Lyric section for website, Audio preprocessing
 
 ## References
 
