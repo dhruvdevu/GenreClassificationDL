@@ -127,10 +127,12 @@ Humans are pretty good at predicting genre - most people who listen to a large e
 ### Under and Oversampling
 During data preprocessing and cleaning we noticed that the number of samples for each genre label were unbalanced. 
 
-## Models TODO talk about regularization
+## Models
 Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre. 
 
 For each model we also included an embedding layer which we later visualize. Since we train our model to predict genre, we expect the embedding layer to cluster songs in the same genre.  
+
+We train our models end to end using Adam. Initially, we faced problems of overfitting in our CNN model, but this qas quickly rectified by using l1 and l2 norm for all the dense layers. We considered adding more features to prevent overfitting, such as Dropout, but we were already able to obtain validation results that matched our training results.
 
 ### Baseline: Fully Connected Network
 To compare our models to a baseline, we train a simple fully connected neural network with 3 hidden layers of dimensions 128, 128, and 50 respectively, followed by a softax layer of dimension 18 to predict genre. Here is a model of our Fully Connected Network:
@@ -203,7 +205,9 @@ Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">he
 
 
 ## Future Directions
-It would be interesting to study the effect of including and excluding different parts of the data - for example, training a model on only lyrics, or only the audio features
+It would be interesting to study the effect of including and excluding different parts of the data - for example, training a model on only lyrics, or only the audio features. This would allow us to determine which parts of our data are most useful, and whether all of them are neccessary. This would be informative, because knowing which parts of our data are more relevant would allow us to build more specific models to take advantage of the data.
+
+It would also be interesting to try out more optimizers, although we found reasonable success using SGD and Adam.
 
 ## References
 Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
