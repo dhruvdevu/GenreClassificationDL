@@ -104,6 +104,12 @@ For Hotel California we can observe exactly where the guitar solo ends. Note tha
 
 
 ## Lyrics
+Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequence of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. Here we try to summarize the information of each lyric into a single embedded vector by first representing the lyrics as a Bag-of-Words, then with a embedded vector for each single word, which we use to implement a weighted sum of each word embedding to retrieve a general embedded vector representation of the song. 
+
+To be more specific, since many words are common to all songs, we implement term frequency–inverse document frequency (TF-IDF) as weights for all words. This identifies the importance of each word in a lyric that reveal the style and type of a song. Then, using the embedding vector for each word in a lyrics, we get a embedding vector for each song using a weighted sum. The advantage of using TF-IDF is its simplicity and efficiency. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. Sometimes, the high frequency words are semantically important. Our bag of words representation also prevents us from taking advantage of word ordering in sentences (which we could have done using methods like attention). This however, is unavoidable due to copyrights on lyric data, which allow us only to obtain bag of word representations. This may be mitigated in our situation by the fact that lyrics are often very repetetive, so a bag of words representation may not be so bad after all.
+
+
+It is proved that [Tom 2016] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [Jeremy 2017] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
 
 
 ## Genre
@@ -170,4 +176,7 @@ Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">he
 
 ## Future Directions
 
+## References
+Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
+Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
 
