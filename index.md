@@ -153,30 +153,34 @@ There have also been some promising results using LSTMS as seen in [this report]
 ### Genre Classification
 Here we present our results at our main task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
 First, to understand the results from our LSTM and CNN model, we look at how a baseline full connected net performs on our data. This is how our training and validation accuracy look:
-<img width="1000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
+<img width="8000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
 Not too bad - even this basic model seems to be learning something, which is promising for us. We see test and training accuracy of about 40%. 
 
 Let's look at our model's precision and recall curve - even though we balanced our classes in the data, accuracy is not always the best metric for our model's success.
-<img width="900" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
-Our baseline has an average precision of 0.44 over 18 classes.
+<img width="800" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
+Our baseline has an average precision of 0.44 over 18 classes, with an F1 score of 0.42.
 
 We now look at our LSTM Model. One of the problems we faced with our LSTM was that it was much slower at both training and inference - it took on the order of 20x as long to train and infer. Here we show our results:
 
 
-<img width="900" height="500" src="Pictures/ipyPlots/lstm_accuracy.png" alt="best">
+<img width="800" height="500" src="Pictures/ipyPlots/lstm_accuracy.png" alt="best">
 Our model had an accuracy of ~30%. This varied between training runs, and we occasionally were able to get it to the range of 40-45% with a smaller batch size.
 
-<img width="900" height="500" src="Pictures/ipyPlots/lstm_precision_recall.png" alt="best">
+<img width="800" height="500" src="Pictures/ipyPlots/lstm_precision_recall.png" alt="best">
 
-The LSTM model had an average precision of 0.32, which is worse than our baseline. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. LSTMs work better for data where correlations are more spread out, requiring longer memories. 
+The LSTM model had an average precision of 0.32, which is worse than our baseline. In addition, it had a (not bad) F1 score of 0.48. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. LSTMs work better for data where correlations are more spread out, requiring longer memories. 
 
 Though our model on average performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. This theory has evidence in the form of results from <a href="http://dawenl.github.io/files/FINAL.pdf
 ">Liang et al</a>,who were able to obtain 38% accuracy on the MSD using the same audio features and lyric data, but used a larger fraction of the dataset.
 
 
 Our best results were from our CNN Model, using a batch size of 10, 20 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The training and validation accuracy is presented below:
-<img width="900" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
-This is a considerable improvement over the baseline model and the LSTM model, with a validation/test accuracy of 50-55%. T
+<img width="800" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
+
+This is a considerable improvement over the baseline model and the LSTM model, with a validation/test accuracy of 50-55%. Further, we look at the Precision and recall:
+<img width="800" height="500" src="Pictures/ipyPlots/genre_precision_recall_better.png" alt="prc">
+Our model had an F1 score of 0.52 and an average precision of 0.48, significantly better than the LSTM and the baseline.
+
 
 ### Popularity percentile classification
 
