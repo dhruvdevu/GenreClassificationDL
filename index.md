@@ -157,20 +157,26 @@ First, to understand the results from our LSTM and CNN model, we look at how a b
 Not too bad - even this basic model seems to be learning something, which is promising for us. We see test and training accuracy of about 40%. 
 
 Let's look at our model's precision and recall curve - even though we balanced our classes in the data, accuracy is not always the best metric for our model's success.
-<img width="1000" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
+<img width="900" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
 Our baseline has an average precision of 0.44 over 18 classes.
 
-We not look at our LSTM Model. One of the problems we faced with our LSTM was that it was much slower at both training and inference - it took on the order of 20x as long to train and infer. Here we show our results:
+We now look at our LSTM Model. One of the problems we faced with our LSTM was that it was much slower at both training and inference - it took on the order of 20x as long to train and infer. Here we show our results:
 
 
-<img width="1000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
+<img width="900" height="500" src="Pictures/ipyPlots/lstm_accuracy.png" alt="best">
+Our model had an accuracy of ~30%. This varied between training runs, and we occasionally were able to get it to the range of 40-45% with a smaller batch size.
 
+<img width="900" height="500" src="Pictures/ipyPlots/lstm_precision_recall.png" alt="best">
 
-Though our model performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. [NEEDS CITATION]
+The LSTM model had an average precision of 0.32, which is worse than our baseline. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. LSTMs work better for data where correlations are more spread out, requiring longer memories. 
+
+Though our model on average performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. This theory has evidence in the form of results from <a href="http://dawenl.github.io/files/FINAL.pdf
+">Liang et al</a>,who were able to obtain 38% accuracy on the MSD using the same audio features and lyric data, but used a larger fraction of the dataset.
 
 
 Our best results were from our CNN Model, using a batch size of 10, 20 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The training and validation accuracy is presented below:
-<img width="1000" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
+<img width="900" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
+This is a considerable improvement over the baseline model and the LSTM model, with a validation/test accuracy of 50-55%. T
 
 ### Popularity percentile classification
 
@@ -191,9 +197,12 @@ Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">he
 
 ## Conclusions and Key takeaways
 
+
 ## Future Directions
+It would be interesting to study the effect of including and excluding different parts of the data - for example, training a model on only lyrics, or only the audio features
 
 ## References
 Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
 Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
+
 
