@@ -150,9 +150,10 @@ There have also been some promising results using LSTMS as seen in [this report]
 
 
 ## Results
-
+### Genre Classification
+Here we present our results at our first task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
 <img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
-
+### Popularity percentile classification
 
 ### t-SNE
 We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting furhter direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
