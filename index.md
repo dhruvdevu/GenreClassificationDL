@@ -249,7 +249,7 @@ The usage data from the million song dataset proved to be difficult to work with
 
 To make use of the work we put forward on the usage data, we also wanted to predict number of plays of a song given audio features and lyrics. We reasoned that humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes). However, we were not able to achieve a better result than random classification and the embedding space which we learned similarly to the genre classification task appeared random as well. Therefore, we decided to solely focus on genre classification. 
 
-## Team Contributions:
+## Team Contributions
 
 Dhruv (38%): Acquired full MSD, Data preprocessing (genre data, usage data, audio feature data), built CNN, LSTM and baseline model, trained models, generated embeddings, set up and wrote content for website, calculated metrics and plots for model evaluation.
 
