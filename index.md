@@ -151,9 +151,27 @@ There have also been some promising results using LSTMS as seen in [this report]
 
 ## Results
 ### Genre Classification
-Here we present our results at our first task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
-<img width="500" height="200" src="Pictures/ipyPlots/varying_br.png" alt="Hello">
-For the task of genre classification, our best results were from our CNN Model
+Here we present our results at our main task - classifying songs by genre. The metrics we primarily concerned ourselves with were accuracy, precision and recall (Average precision over all classes), and F1 score.
+First, to understand the results from our LSTM and CNN model, we look at how a baseline full connected net performs on our data. This is how our training and validation accuracy look:
+<img width="1000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
+Not too bad - even this basic model seems to be learning something, which is promising for us. We see test and training accuracy of about 40%. 
+
+Let's look at our model's precision and recall curve - even though we balanced our classes in the data, accuracy is not always the best metric for our model's success.
+<img width="1000" height="500" src="Pictures/ipyPlots/baseline_precision_recall.png" alt="best">
+Our baseline has an average precision of 0.44 over 18 classes.
+
+We not look at our LSTM Model. One of the problems we faced with our LSTM was that it was much slower at both training and inference - it took on the order of 20x as long to train and infer. Here we show our results:
+
+
+<img width="1000" height="500" src="Pictures/ipyPlots/baseline_accuracy.png" alt="best">
+
+
+Though our model performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. [NEEDS CITATION]
+
+
+Our best results were from our CNN Model, using a batch size of 10, 20 epochs, a learning rate of 1e-3, and 128 conv filters per layer (except the last one, which had 256 filters). The training and validation accuracy is presented below:
+<img width="1000" height="500" src="Pictures/ipyPlots/genre_accuracy_best.png" alt="best">
+
 ### Popularity percentile classification
 
 ### t-SNE
