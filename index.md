@@ -7,7 +7,7 @@ Consider the following 3 songs:
 
 How do we determine which songs are similar and which are not? Intuitively, we know that Kanye's music is similar to Eminem's in ways that Ed Sheeran's is not. As humans, we use a variety of distinguishing factors such as artist, genre, tone, etc, based on information from lyrics and popularity, as well as musical information like rhythm, scale, timbre, pitch, chord progressions, and more. 
 
-Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches such as collaborative filtering [CITE]. We aim, however, to extract this information using audio features and lyrics of songs directly using deep learning. Specifically, we develop a model to classify songs by genre and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity. We choose to train on genre classification because it allows us to directly on a task that would allow our model to try and learn actual musical features. Genre is the most natural candidate label for such a task, since it is is very often a proxy for features like chord progressions, rhythm, timbre, and other musical features.
+Computer systems that can process and understand music in this manner hold great value to music producers and consumers alike. Companies like Google, Apple, Spotify, Pandora, and dozens of others are all interested in retrieving information from music that would allow them to make better recommendations, and understand what types of music and listeners belong together. Historically, this information has been obtained from user and usage data-centric approaches such as collaborative filtering [CITE]. We aim, however, to extract this information using audio features and lyrics of songs directly using deep learning. Specifically, we develop a model to classify songs by genre and to generate a latent embedding representation for each song, which we use to cluster songs and which can be used as a gauge for song similarity. We choose genre for learning song embedding, since it is is very often a proxy for features like chord progressions, rhythm, timbre, and other musical features.
 
 ## Problem statement and Success Metric
 We aim to predict genre labels and create latent embedding representations of songs given audio features and lyrics. To do so we develop three different deep learning models: 1) Baseline Dense Network, 2) Convolutional Neural Network 3) LSTM. Each network will output an array which contains a logit for each genre and has a layer which contains a 50 dimensional latent embedding representation of the song. 
@@ -29,11 +29,11 @@ The audio features come with the MSD. Due to copyright issues, the MSD does not 
 
 The derived audio features are provided as timeseries data of up to 935 timesteps in a given song. We note a few things:
 
-    * Not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps.
+* Not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps.
 
-    * There is generally no gurantee that the timesteps have the same timelength within a song or between songs. While we  observed that the maximum time of a timesteps is 5 seconds, 99.4% of all timelengths are less than or equal to one second. A timelength of 1 second is roughly small enough such that we can treat the samples as the same -- which we did moving forward. 
+* There is generally no gurantee that the timesteps have the same timelength within a song or between songs. While we  observed that the maximum time of a timesteps is 5 seconds, 99.4% of all timelengths are less than or equal to one second. A timelength of 1 second is roughly small enough such that we can treat the samples as the same -- which we did moving forward. 
    
-    * All audio features timeseries start at the begining of their respective songs. 
+* All audio features timeseries start at the begining of their respective songs. 
 
 
 #### Chroma Features
@@ -128,10 +128,18 @@ The subset of the 100,000 most popular songs had only 32,648 songs with a genre 
 
 
 ## Data Preprocessing
+Most of the initial challanges for data preprocessing were to gather all features from the complementary datasets of the MSD. These datasets are spread out accross multiple website and are provided by different agencies. Most complementary datasets also only provided data for a subset of the songs in the MSD, so we needed to ensure that our final dataset has features and a corresponding label for every song. Taking the intersection of all datasets significantly reduced our final dataset. 
+Since the dataset was several hundreds of gigabyte large, we also needed to do all data cleaning and gathering on a cloud instance. 
+
+Once we had a cleaned dataset, we started to explore and notice that our genres were unbalanced. Hence, our main data preprocessing technique was under and oversampling.
+
+
 ### Under and Oversampling
 During data preprocessing and cleaning we noticed that the number of samples for each genre label were unbalanced. Since around 45% of our dataset is 'rock' labeled our model will easily achieve artificial high accuracy of 45% by always predicting 'rock'. Only when plotting the confusion matrix will it become obvious that our model is not performing as desired. 
 
-To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [here](https://www.jair.org/index.php/jair/article/view/11192/26406). Before using the technique, we 
+To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [here](https://www.jair.org/index.php/jair/article/view/11192/26406). Before using the technique, we removed two of the genres which had less than 10 samples in the dataset: Vocal and International. 
+
+To balance the classes, we decided to sample 4,000 times with replacement for the rock dataset and sample 1,000 times with replacement from each other genre subset. We decided to retain more rock samples because we believe that the reason many samples are labeled as rock is because most music sounds vaguely similar to rock. Hence, when allowing the model to train very well on rock, we believe that the model will better learn to classify other genres by only having to notice minor differences in the features. This reasoning follows the motivation for transfer learning, where training on one task makes it easier to train for a related task. 
 
 ## Models
 Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre. 
