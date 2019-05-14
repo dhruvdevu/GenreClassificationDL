@@ -31,13 +31,13 @@ The derived audio features are provided as timeseries data of up to 935 timestep
 
 * Not every song has 935 timesteps and the majority of the songs had timesteps within the 300-400 range. Hence, we truncated the data to have 300 timesteps and discarded data with less than 300 timesteps.
 
-* There is generally no gurantee that the timesteps have the same timelength within a song or between songs. While we  observed that the maximum time of a timesteps is 5 seconds, 99.4% of all timelengths are less than or equal to one second. A timelength of 1 second is roughly small enough such that we can treat the samples as the same -- which we did moving forward. 
+* There is generally no gurantee that the timesteps have the same timelength within a song or between songs. While we  observed that the maximum time of a timesteps is 5 seconds, roughly 99% of all timelengths are less than or equal to one second. A timelength of 1 second is roughly small enough such that we can treat the samples as the same -- which we did moving forward. 
    
 * All audio features timeseries start at the begining of their respective songs. 
 
 
 #### Chroma Features
-Chroma features give a way to represent the intensity of the twelve different pitch classes throughout a song. Generally, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of [octave](\href{https://en.wikipedia.org/wiki/Octave) steps. Hence, we can split a pitch into two component: tone height and chroma. The set of twelve chroma, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
+Chroma features are used to represent the intensity of the twelve different pitch classes throughout a song. In other words, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of [octave](\href{https://en.wikipedia.org/wiki/Octave) steps. Hence, we can split a pitch into two component: tone height and chroma. The set of twelve chroma, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
 
     C, C#, D, D#, E, F, F#, G, G#, A, A#, B
 
@@ -56,8 +56,7 @@ For a subset of the songs, the MSD provides timbre information. For a given song
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
 
-The timbre features at every timestep are usually computed by retrieving the [Mel-freqeuncy Cepstral Coefficients](https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf) [(MFCC)](http://www.speech.cs.cmu.edu/15-492/slides/03_mfcc.pdf) and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
-
+The timbre features at every timestep are usually computed by retrieving the Mel-freqeuncy Cepstral Coefficients (MFCC) [CITE soton.ac.uk] and by taking the twelve most representative components. In the remainder of the paper we use timber and MFCC interchangably. 
 
 Due to how the timber segments are calculated, the timber feature vector at every timestep does not have a clear interpretation unlike the chroma features. Also, the maximum value of a component of the timber feature vector at a timestep generally depends on the song and is not normalized.
 
@@ -65,11 +64,9 @@ Due to how the timber segments are calculated, the timber feature vector at ever
 #### Visualization
 We plot the visualization of both the chroma and timber segment timeseries as a heatmap for various songs. While timber features are less interpretable than chroma, we plot them anyway to have a better idea of the data. 
 
-Now, specifically the chroma feature values allow us to interpret the songs well:
+Given the interpretability of chroma feature values we notice for example: Party in the USA has many changes in the intensity of chroma values while Hotel California does not. Such a pattern indicates that Party in the USA has a more energetic start while Hotel California starts slower (notably with the famous slow guitar solo). 
 
-We notice that Party in the USA has many changes in the intensity of chroma values while Hotel California does not. Such a pattern indicates that Party in the USA has a more energetic start while Hotel California starts slower (notably with the famous slow guitar solo). 
-
-We also provide song snippets for ease of use. Unfortunately, Spotify does not allow to choose the time interval of the song. So, the songs do not overlap with the interval of the features but should serve as a reminder for the general feel of the song. 
+We also provide song snippets for ease of use. Unfortunately, Spotify does not allow us to choose the time interval of the song. So, the songs do not overlap with the interval of the features but should serve as a reminder for the general feel of the song. 
 
 ##### Miley Cyrus: Party in the USA
 
@@ -106,7 +103,6 @@ For Hotel California we can observe exactly where the guitar solo ends. Note tha
 
 
 
-
 ### Lyrics
 Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequence of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. Here we try to summarize the information of each lyric into a single embedded vector by first representing the lyrics as a Bag-of-Words, then with a embedded vector for each single word, which we use to implement a weighted sum of each word embedding to retrieve a general embedded vector representation of the song. 
 
@@ -126,6 +122,8 @@ The subset of the 100,000 most popular songs had only 32,648 songs with a genre 
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/genre_histogram.html"></iframe>
 
+We deal with this class imbalence in the following Data Preprocessing section. 
+
 
 ## Data Preprocessing
 Most of the initial challanges for data preprocessing were to gather all features from the complementary datasets of the MSD. These datasets are spread out accross multiple website and are provided by different agencies. Most complementary datasets also only provided data for a subset of the songs in the MSD, so we needed to ensure that our final dataset has features and a corresponding label for every song. Taking the intersection of all datasets significantly reduced our final dataset. 
@@ -137,16 +135,16 @@ Once we had a cleaned dataset, we started to explore and notice that our genres 
 ### Under and Oversampling
 During data preprocessing and cleaning we noticed that the number of samples for each genre label were unbalanced. Since around 45% of our dataset is 'rock' labeled our model will easily achieve artificial high accuracy of 45% by always predicting 'rock'. Only when plotting the confusion matrix will it become obvious that our model is not performing as desired. 
 
-To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [here](https://www.jair.org/index.php/jair/article/view/11192/26406). Before using the technique, we removed two of the genres which had less than 10 samples in the dataset: Vocal and International. 
+To combat this behaviour we used the simple yet powerful technique of over and under sampling as done [CITE Jair sampling paper]. Before using the technique, we removed two of the genres which had less than 10 samples in the dataset: Vocal and International. 
 
 To balance the classes, we decided to sample 4,000 times with replacement for the rock dataset and sample 1,000 times with replacement from each other genre subset. We decided to retain more rock samples because we believe that the reason many samples are labeled as rock is because most music sounds vaguely similar to rock. Hence, when allowing the model to train very well on rock, we believe that the model will better learn to classify other genres by only having to notice minor differences in the features. This reasoning follows the motivation for transfer learning, where training on one task makes it easier to train for a related task. 
 
 ## Models
-Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre. 
+Our goal is to predict genre given song features. The input to the model will consist of derived audio features, Chroma and MFCC (Timber Segments) and our lyric embeddings. The output will be a 18 dimensional logits vector to classify genre (note that due to Data Preprocessing, we are actually working over 16 genres). 
 
 For each model we also included an embedding layer which we later visualize. Since we train our model to predict genre, we expect the embedding layer to cluster songs in the same genre.  
 
-We train our models end to end using Adam. Initially, we faced problems of overfitting in our CNN model, but this qas quickly rectified by using l1 and l2 norm for all the dense layers. We considered adding more features to prevent overfitting, such as Dropout, but we were already able to obtain validation results that matched our training results.
+We train our models end to end using Adam. Initially, we faced problems of overfitting in our CNN model. We combated this by using the correct over/undersampling technique and by using l1 and l2 norm for all the dense layers. We considered adding more features to prevent overfitting, such as Dropout, but we were already able to obtain validation results that matched our training results.
 
 ### Baseline: Fully Connected Network
 To compare our models to a baseline, we train a simple fully connected neural network with 3 hidden layers of dimensions 128, 128, and 50 respectively, followed by a softax layer of dimension 18 to predict genre. Here is a model of our Fully Connected Network:
@@ -155,7 +153,7 @@ To compare our models to a baseline, we train a simple fully connected neural ne
 
 
 ### CNN: 
-Our CNN model was motivated by the model used by <a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>. For the audio features, both Chroma and MFCC, with dimension (300, 12), we had a 1 dimensional convolution over time steps followed by max pooling -- repeated 3 times. We then performed global average temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Compared to van den Oord's model, we removed the global L2 and global max pool to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the lyric embeddings. We then passed this concatinated vector through 3 hidden layers with the same architecture as our baseline model. 
+Our CNN model was motivated by the model used by [Sander paper]. For the audio features, both Chroma and MFCC, with dimension (300, 12), we had a 1 dimensional convolution over time steps followed by max pooling -- repeated 3 times. We then performed global average temporal pooling to produce a 1 dimensional vector for each audio feature, which we concatenated together. Compared to van den Oord's model, we removed the global L2 and global max pool to reduce redundancy of our model and decrease overfitting. To this vector, we also concatenated the lyric embeddings. We then passed this concatinated vector through 3 hidden layers with the same architecture as our baseline model. 
 
 <img width="900" height="350" src="Pictures/StaticPlots/Music182ConvNet.jpg" alt="Conv Net Diagram">
 
@@ -191,7 +189,7 @@ Our model had an accuracy of ~30%. This varied between training runs, and we occ
 
 <img width="800" height="500" src="Pictures/ipyPlots/lstm_precision_recall.png" alt="best">
 
-The LSTM model had an average precision of 0.32, which is worse than our baseline. In addition, it had a (not bad) F1 score of 0.48. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. LSTMs work better for data where correlations are more spread out, requiring longer memories. 
+The LSTM model had an average precision of 0.32, which is worse than our baseline. In addition, it had a (not bad) F1 score of 0.48. One explanation for why our model didnt work is that it may not have been well fitted to this type of data - perhaps convolutions are a better way of analyzing our particular data due to the locality of temporal correlations - at any given timestamp, the immediately neighbouring timestamps may be more important than more distant steps. 
 
 Though our model on average performed worse than our baseline, a large part of this was due to our difficulty training it - we didn't have time to optimize over hyperparameters. Perhaps hyperparam training and tweaking with the model (for example, adding attention) could increase its performance. This theory has evidence in the form of results from <a href="http://dawenl.github.io/files/FINAL.pdf
 ">Liang et al</a>,who were able to obtain 38% accuracy on the MSD using the same audio features and lyric data, but used a larger fraction of the dataset.
@@ -207,14 +205,16 @@ This is a considerable improvement over the baseline model and the LSTM model, w
 
 Our model had an F1 score of 0.52 and an average precision of 0.48, significantly better than the LSTM and the baseline.
 
-We also look at the confusion matrix for our CNN model:
+We also looked at the confusion matrix for our best performin model, the CNN model:
 <img width="800" height="800" src="Pictures/ipyPlots/genre_confusion_better.png" alt="confusion">
 This matrix has mixed but reasonable results. We do see an overall diagonal structure. Some genres are well identified - Rock, RnB, Latin, Rap, New Age, and Electronic. We also see that songs labelled in Punk and Metal are often classified as Rock, (or eachother), indicating that our model learns that these genres are musically similar. Our confusion matrix shows that our model often classifies many models as Rock by default - this was a problem we faced even more prominently until we downsampled rock in our dataset. This could also result from teh fact that 'Rock' as a label is musically very diverse - bands like the Beatles and AC/DC sound very different but could both be classified as Rock. Nevertheless, the diagonal structure of our confusion matrix is promising for our model.
 
 
 
-### t-SNE
-We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting further direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
+### Latent Embedding Representation: t-SNE
+We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs which we consider a success considering the problem statement. 
+
+Surprisingly, our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting further direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/cnn-tsne-scatter-genre.html"></iframe>
 
@@ -251,9 +251,9 @@ To make use of the work we put forward on the usage data, we also wanted to pred
 
 Dhruv: Acquired full MSD, Data preprocessing (genre data, usage data, audio feature data), built CNN, LSTM and baseline model, trained models, generated embeddings, set up and wrote content for website, calculated metrics and plots for model evaluation.
 
-Daniel: Data preprocessing (genre data, usage data, audio feature data), built LSTM model, wrote content for website, t-SNE plotting, audio exploration and visualization, Model visualization diagrams.
+Daniel: Set up codebase, Data preprocessing (genre data, usage data, audio feature data), built LSTM model, wrote content for website, t-SNE plotting, audio exploration and visualization, Model visualization diagrams.
 
-Wayne: Processed and generated lyric embeddings from BoW representation, wrote Lyric section for website, Audio preprocessing
+Wayne: Processed and generated lyric embeddings from BoW representation, wrote Lyric section for website, Audio preprocessing.
 
 ## References
 
@@ -262,6 +262,7 @@ Wayne: Processed and generated lyric embeddings from BoW representation, wrote L
 Tom Kenter. Siamese CBOW: Optimizing Word Embeddings for Sentence Representations. arXiv:1606.04640
 Ferrero, Jérémy & Agnès, Frédéric & Besacier, Laurent & Schwab, Didier. (2017). Using Word Embedding for Cross-Language Plagiarism Detection. 10.18653/v1/E17-2066. 
 
+(https://eprints.soton.ac.uk/361426/1/EUSIPCO_2012.pdf)
 
 https://ismir2017.smcnus.org/wp-content/uploads/2017/10/43_Paper.pdf -- hierarchical lstm 
 
@@ -270,3 +271,6 @@ Y. MG Costa, L. S. Oliveira, and C. N. Silla. An evaluation of convolutional neu
 
 http://dawenl.github.io/files/FINAL.pdf -- other students did something similar but we get better results and getting embedding spaces. 
 
+(https://www.jair.org/index.php/jair/article/view/11192/26406)
+
+<a href="https://papers.nips.cc/paper/5004-deep-content-based-music-recommendation">van den Oord et al</a>
