@@ -19,10 +19,10 @@ For the latent embedding spaces we are mostly looking for a space which captures
 
 Our best performing model achieved 55% accuracy at 16 genre classification, which was significantly better than our baseline model. We also note that we performed better than the 36% obtained by <a href="http://dawenl.github.io/files/FINAL.pdf" >this project from CMU</a> who worked on the same dataset with a similar problem statement but with a different subset. We were also able to generate song embeddings, which were both useful and learned interesting features -- e.g. our model discovered that songs by latin singers are close to each other even though they may belong to different genres. We also discoved that our model often cross-classies rock, punk and metal, which is to be expected since songs from these genres may be very similar and a human may have troubles discerning them.
 
-We note that genre classification given audio data [1] or lyric data [8] and genre embeddings from genre classification are well studied research problem due to their importance in recommendation systems. However, to the best of our knowledge, all three have not been attempted on the Million Song Dataset (MSD). 
+We note that genre classification given audio data [1] or lyric data [8] and genre embeddings from genre classification are well studied research problems due to their importance in recommendation systems. However, to the best of our knowledge, all three have not been attempted on the Million Song Dataset (MSD) simultaneously. 
 
 ## Dataset
-We are using the famous Million Song Dataset (MSD) and its complementary datasets for the project. The MSD itself provides a freely-accessible collection of audio features and metadata for a million contemporary popular music tracks. The feature analysis and metadata for the million songs are primarily provided by The Echo Nest. While the MSD does not provided audio samples it does provide derived audio features which we use. Furthermore, it provides various complementary datasets from which we retrieve lyrics, genre tags and usage data.
+We are using the famous Million Song Dataset (MSD) and its complementary datasets for the project. The MSD itself provides a freely-accessible collection of audio features and metadata for a million contemporary popular music tracks. The feature analysis and metadata for the million songs are primarily provided by The Echo Nest. While the MSD does not provided audio samples it does provide derived audio features which we use. Furthermore, it provides various complementary datasets from which we retrieve lyrics and genre tags.
 
 The dataset identifies a song by either *song_id* or *track_id*. One or the other is consistently used in the complementary datasets, which allows us to correctly preprocess the data. Given one of the id's we can then determine the song name and the artist. 
 
@@ -109,21 +109,22 @@ For Hotel California we can observe exactly where the guitar solo ends. Note tha
 
 
 ### Lyrics
-Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequence of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. Here we try to summarize the information of each lyric into a single embedded vector by first representing the lyrics as a Bag-of-Words, then with a embedded vector for each single word, which we use to implement a weighted sum of each word embedding to retrieve a general embedded vector representation of the song. 
+Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequence of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. 
 
-To be more specific, since many words are common to all songs, we implement term frequency–inverse document frequency (TF-IDF) as weights for all words. This identifies the importance of each word in a lyric that reveal the style and type of a song. Then, using the embedding vector for each word in a lyrics, we get a embedding vector for each song using a weighted sum. The advantage of using TF-IDF is its simplicity and efficiency. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. Sometimes, the high frequency words are semantically important. Our bag of words representation also prevents us from taking advantage of word ordering in sentences (which we could have done using methods like attention). This however, is unavoidable due to copyrights on lyric data, which allow us only to obtain bag of word representations. This may be mitigated in our situation by the fact that lyrics are often very repetetive, so a bag of words representation may not be so bad after all.
+We retrieved the lyrics data from the complementary musiXmatch dataset. The lyrics are given in a Bag-of-Words representation, so we try summarize the information of each lyric into a single embedded vector. To do so, we find the precomputed Word2Vec embedding vector for each single word and take a weighted sum, weighted by the fraction of total occurances of the word in the lyric, of each word embedding to retrieve a general embedding vector representation of the song. 
 
+The advantage of using above the weighted sum method is its simplicity and efficiency. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. High frequency words may be semantically important (e.g. love) or unimportant (e.g. the). Our bag of words representation also prevents us from taking advantage of word ordering in sentences (which we could have done using methods like attention). This however, is unavoidable due to copyrights on lyric data, which allow us only to obtain a bag-of-word representation. This may be mitigated in our situation by the fact that lyrics are often very repetetive, so a bag of words representation may not be so bad after all.
 
-It is proved that [4] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [3] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
+It has been shown [4] that averaging the embeddings of words in a sentence is a surprisingly successful and efficient way of obtaining sentence embeddings. [3] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. They showed the effectiveness of such method in detecting similarities between sentences.  
 
 
 ### Genre
-Since our dataset was very large, we decided to focus on the 100,000 most popular songs, which fell into 18 different genres:
+We retrieved the genre labels from the tagtraum complementary dataset. The labels fell into the following 18 genres:
 
       Vocal, Punk, Rock, Country, Blues, New, World, Reggae, Jazz, Folk, RnB,
       International, Pop_Rock, Electronic, Metal, Rap, Pop, Latin
       
-The subset of the 100,000 most popular songs had only 32,648 songs with a genre label. Furthermore, around 45% of the labels fell into the rock category as we can see in the following plot:
+Since our dataset was very large, we decided to focus on the 100,000 most popular songs, for which we only found 32,648 songs with a genre label. Furthermore, around 45% of the labels fell into the rock category as we can see in the following plot:
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/genre_histogram.html"></iframe>
 
@@ -131,8 +132,8 @@ We deal with this class imbalence in the following Data Preprocessing section.
 
 
 ## Data Preprocessing
-Most of the initial challanges for data preprocessing were to gather all features from the complementary datasets of the MSD. These datasets are spread out accross multiple website and are provided by different agencies. Most complementary datasets also only provided data for a subset of the songs in the MSD, so we needed to ensure that our final dataset has features and a corresponding label for every song. Taking the intersection of all datasets significantly reduced our final dataset. 
-Since the dataset was several hundreds of gigabyte large, we also needed to do all data cleaning and gathering on a cloud instance. 
+Most of the initial challanges for data preprocessing were to gather all features from the complementary datasets of the MSD. These datasets are spread out accross multiple website and are provided by different agencies. Most complementary datasets also only provide data for a subset of the songs in the MSD, so we needed to ensure that our final dataset has features and a corresponding label for every song. Taking the intersection of all datasets significantly reduced our final dataset to **32,648**. 
+Since the full dataset was several hundreds of gigabyte large, we also needed to do all data cleaning and gathering on a cloud instance. 
 
 Once we had a cleaned dataset, we started to explore and notice that our genres were unbalanced. Hence, our main data preprocessing technique was under and oversampling.
 
