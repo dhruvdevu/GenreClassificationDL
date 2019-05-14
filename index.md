@@ -44,11 +44,11 @@ The derived audio features are provided as timeseries data of up to 935 timestep
 #### Chroma Features
 Chroma features are used to represent the intensity of the twelve different pitch classes throughout a song. In other words, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of [octave](\href{https://en.wikipedia.org/wiki/Octave) steps. Hence, we can split a pitch into two component: tone height and chroma. The set of twelve chroma, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
 
-    C, C#, D, D#, E, F, F#, G, G#, A, A#, B
+         C, C#, D, D#, E, F, F#, G, G#, A, A#, B
 
 Motivated by how humans preceive pitch, two pitches are said to be in the same pitch class if they are separated by an integral number of octavs. We can write for the chroma F:
 
-    ..., F_{-2}, F_{-1}, F_{0}, F_{1}, F_{2}, ...
+         ..., F_{-2}, F_{-1}, F_{0}, F_{1}, F_{2}, ...
 
 where two adjacent pitches are separated by one octave.
 
