@@ -23,7 +23,7 @@ The dataset identifies a song by either *song_id* or *track_id*. One or the othe
 
 For our neural net we take Audio features and Lyrics as our input and Genre and Usage data as our output. After all preprocessing is done we had 32,648 song which had all necessary features.
 
-## Audio Features
+### Audio Features
 The audio features come with the MSD. Due to copyright issues, the MSD does not provide audio samples of songs but provides derived features such as chroma and MFCC features. We attempted to retrieve audio samples from 7digital which is a complementary dataset. However, 7digital does not hand out API keys anymore and we were unable the get the data. 
 
 
@@ -36,7 +36,7 @@ The derived audio features are provided as timeseries data of up to 935 timestep
     * All audio features timeseries start at the begining of their respective songs. 
 
 
-### Chroma Features
+#### Chroma Features
 Chroma features give a way to represent the intensity of the twelve different pitch classes throughout a song. Generally, chroma features are used to capture harmonic and melodic characteristics of an audio signal such that they are not affected by a choice of instrument or timbre. The idea of pitch classes is that humans perceive notes to be similar when they are separated by an integral number of [octave](\href{https://en.wikipedia.org/wiki/Octave) steps. Hence, we can split a pitch into two component: tone height and chroma. The set of twelve chroma, assuming the [equal tempered scale](https://en.wikipedia.org/wiki/Equal\_temperament), in western notation is given by:
 
     C, C#, D, D#, E, F, F#, G, G#, A, A#, B
@@ -51,7 +51,7 @@ To get the chroma features various techniques can be used. A common one is to us
 
 We note that the intensity of the chroma features is normalized, such that the maximum chroma feature has intensity 1.
 
-### Timbre Segments
+#### Timbre Segments
 For a subset of the songs, the MSD provides timbre information. For a given song, they provide timeseries data with twelve dimensional feature vectors encoding information about timbre during the given segments of a song. 
 
 Timbre is an important feature for music information retrieval and genre classification. Timbre describes the perceived sound quality of a musical note, sound or tune -- e.g., a sound played at the same pitch and loudness can sound very different across instruments. Timbre is also what allows humans to differentiate between instruments and voices.  
@@ -62,7 +62,7 @@ The timbre features at every timestep are usually computed by retrieving the [Me
 Due to how the timber segments are calculated, the timber feature vector at every timestep does not have a clear interpretation unlike the chroma features. Also, the maximum value of a component of the timber feature vector at a timestep generally depends on the song and is not normalized.
 
 
-### Visualization
+#### Visualization
 We plot the visualization of both the chroma and timber segment timeseries as a heatmap for various songs. While timber features are less interpretable than chroma, we plot them anyway to have a better idea of the data. 
 
 Now, specifically the chroma feature values allow us to interpret the songs well:
@@ -71,7 +71,7 @@ We notice that Party in the USA has many changes in the intensity of chroma valu
 
 We also provide song snippets for ease of use. Unfortunately, Spotify does not allow to choose the time interval of the song. So, the songs do not overlap with the interval of the features but should serve as a reminder for the general feel of the song. 
 
-#### Miley Cyrus: Party in the USA
+##### Miley Cyrus: Party in the USA
 
 <iframe src="https://open.spotify.com/embed/track/5Q0Nhxo0l2bP3pNjpGJwV1" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
@@ -84,7 +84,7 @@ Notice that at every timestep many pitches are registered simultaneously. While 
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Party In The U.S.A._Miley Cyrus.html"></iframe>
 
-#### Beyoncé: Halo
+##### Beyoncé: Halo
 
 <iframe src="https://open.spotify.com/embed/track/4JehYebiI9JE8sR8MisGVb" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
@@ -94,7 +94,7 @@ Halo starts with slower changes in pitches and picks up the pace at the 10 secon
 
 <iframe width="700" height="400" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/timber_Halo_Beyoncé.html"></iframe>
 
-#### Eagles: Hotel California 
+##### Eagles: Hotel California 
 
 <iframe src="https://open.spotify.com/embed/track/40riOy7x9W7GXjyGp4pjAv" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
@@ -107,7 +107,7 @@ For Hotel California we can observe exactly where the guitar solo ends. Note tha
 
 
 
-## Lyrics
+### Lyrics
 Lyrics provide important features for the uniqueness and relative similarities of songs. By looking into lyrics content as a sequence of words, we aim to evaluate the content of lyrics to help identify the style and classification of each song and use it to match most similar songs in related genres. Here we try to summarize the information of each lyric into a single embedded vector by first representing the lyrics as a Bag-of-Words, then with a embedded vector for each single word, which we use to implement a weighted sum of each word embedding to retrieve a general embedded vector representation of the song. 
 
 To be more specific, since many words are common to all songs, we implement term frequency–inverse document frequency (TF-IDF) as weights for all words. This identifies the importance of each word in a lyric that reveal the style and type of a song. Then, using the embedding vector for each word in a lyrics, we get a embedding vector for each song using a weighted sum. The advantage of using TF-IDF is its simplicity and efficiency. One disadvantage is that it is not comprehensive enough to evaluate the importance by the frequency of its appearance. Sometimes, the high frequency words are semantically important. Our bag of words representation also prevents us from taking advantage of word ordering in sentences (which we could have done using methods like attention). This however, is unavoidable due to copyrights on lyric data, which allow us only to obtain bag of word representations. This may be mitigated in our situation by the fact that lyrics are often very repetetive, so a bag of words representation may not be so bad after all.
@@ -116,7 +116,7 @@ To be more specific, since many words are common to all songs, we implement term
 It is proved that [Tom 2016] averaging the embeddings of words in a sentence has proven to be a surprisingly successful and efficient way of obtaining sentence embeddings. However, word embeddings trained with the methods currently available are not optimized for the task of sentence representation. [Jeremy 2017] used a similar weighted sentence embedding method to achieved a decent result for Plagiarism Detection. Their show the effectiveness of such method in detecting similarities between sentences. Since lyrics are one of the features in our collaborative filtering space, such attribute will very likely and effectively help our model.  
 
 
-## Genre
+### Genre
 Since our dataset was very large, we decided to focus on the 100,000 most popular songs, which fell into 18 different genres:
 
       Vocal, Punk, Rock, Country, Blues, New, World, Reggae, Jazz, Folk, RnB,
@@ -127,10 +127,7 @@ The subset of the 100,000 most popular songs had only 32,648 songs with a genre 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/genre_histogram.html"></iframe>
 
 
-## Usage Data/Popularity
-Humans are pretty good at predicting genre - most people who listen to a large enough variety of music can eventually figure out what different genres sound like, at least roughly. Though automated genre classification is an immensely useful task, we sought to see whether our models could also learn to predict features that are difficult for humans to understand as well. In particular, we trained our models to predict popularity of music, by determining which percentile of music a particular song fell into (ranked by number of listens). We formulated this as a classification problem with 1 bin for each 10th percentile (10 classes).
-
-## Date Preprocessing
+## Data Preprocessing
 ### Under and Oversampling
 During data preprocessing and cleaning we noticed that the number of samples for each genre label were unbalanced. Since around 45% of our dataset is 'rock' labeled our model will easily achieve artificial high accuracy of 45% by always predicting 'rock'. Only when plotting the confusion matrix will it become obvious that our model is not performing as desired. 
 
@@ -192,11 +189,8 @@ This is a considerable improvement over the baseline model and the LSTM model, w
 <img width="800" height="500" src="Pictures/ipyPlots/genre_precision_recall_better.png" alt="prc">
 Our model had an F1 score of 0.52 and an average precision of 0.48, significantly better than the LSTM and the baseline.
 
-
-### Popularity percentile classification
-
 ### t-SNE
-We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting furhter direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
+We plot the **CNN** embedding vectors of 3,000 songs. We can clearly see a clustering of the songs. Our model also picked up on other interesting song characteristics. While the clust around (70, -10) has Pop, Rock, and Latin mixed, the majority of the songs appear to be by Latin singers. An interesting further direction would be to evaluate which features contribute to this clustering and which parts of the model are activated most when given such songs. 
 
 <iframe width="900" height="620" seamless="seamless" frameBorder="0" scrolling="yes" src="Pictures/PlotlyPlots/cnn-tsne-scatter-genre.html"></iframe>
 
@@ -209,16 +203,20 @@ The software tools we used for this project were:
 3. Scikit-learn
 4. Pandas - Pandas was a useful tool for organizing and processing our dataset which was very spread out.
 Our code can be found <a href="https://github.com/daniellengyel/music-cs182/">here</a>
+To train our models, we used an AWS p2.xlarge instance, with a Tesla K80 GPU. In addition, we made use of the publicly hosted EBS copy of the Million Song Dataset.
+We also used Google Cloud extensively towards our earlier collaborative filtering approach.
 
-## Conclusions and Key takeaways
+## Conclusions
+
+### Key takeaways
 
 
-## Future Directions
+### Future Directions
 It would be interesting to study the effect of including and excluding different parts of the data - for example, training a model on only lyrics, or only the audio features. This would allow us to determine which parts of our data are most useful, and whether all of them are neccessary. This would be informative, because knowing which parts of our data are more relevant would allow us to build more specific models to take advantage of the data.
 
 It would also be interesting to try out more optimizers, although we found reasonable success using SGD and Adam.
 
-## Other approaches 
+### Other approaches 
 We started the project by attempting to build a model which learns a mapping from audio features and lyrics to a song's representation in the collaborative filtering space [reference collaborative filtering]. A very useful model when attempting to recommend songs with a low number of plays. Our approach was motivated by [Sanders paper] to which we aimed to contribute by including lyric data as feature input. 
 
 The usage data from the million song dataset proved to be difficult to work with. We attempted to obtain the collaborative filtering space by using the Spark Alternating Least Squares algorithm with implicit feedback from [https://dl.acm.org/citation.cfm?id=1608614] on a Google Cloud instance. However, even after an exhaustive hyper-parameter search we were unable to produce a collaborative filtering space which was reasonable: Rudolph the red nosed reindeer and a heavy metal song were closest neighbors. Since the authors did not elaborate on the collaborative filtering space they found in their paper, we decided to reached out. They haven't responded yet. Since our results seemed inappropriate and we could not find how a correct collaborative filtering space should look like, we decided to pivot on our problem statement. 
