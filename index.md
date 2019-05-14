@@ -209,7 +209,7 @@ This is a considerable improvement over the baseline model and the LSTM model, w
 
 Our model had an F1 score of 0.52 and an average precision of 0.48, significantly better than the LSTM and the baseline.
 
-We also looked at the confusion matrix for our best performin model, the CNN model:
+We also looked at the confusion matrix for our best performing model, the CNN model:
 <img width="800" height="800" src="Pictures/ipyPlots/genre_confusion_better.png" alt="confusion">
 This matrix has mixed but reasonable results. We do see an overall diagonal structure. Some genres are well identified - Rock, RnB, Latin, Rap, New Age, and Electronic. We also see that songs labelled in Punk and Metal are often classified as Rock, (or eachother), indicating that our model learns that these genres are musically similar. Our confusion matrix shows that our model often classifies many models as Rock by default - this was a problem we faced even more prominently until we downsampled rock in our dataset. This could also result from teh fact that 'Rock' as a label is musically very diverse - bands like the Beatles and AC/DC sound very different but could both be classified as Rock. Nevertheless, the diagonal structure of our confusion matrix is promising for our model.
 
